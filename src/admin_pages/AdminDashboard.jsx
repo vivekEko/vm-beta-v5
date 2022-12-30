@@ -96,7 +96,7 @@ const AdminDashboard = () => {
           })}
         </div>
 
-        <div className="pb-16 ">
+        <div className="pb-16 min-h-[80vh] ">
           {homePageData?.all_page_data?.map((data, index) => {
             return (
               <div
@@ -133,7 +133,7 @@ const AdminDashboard = () => {
                     </Link>
                   </div>
 
-                  {data?.page_name !== "Home Page" && (
+                  {/* {data?.page_name !== "Home Page" && (
                     <div
                       className="relative"
                       onClick={() => {
@@ -169,7 +169,7 @@ const AdminDashboard = () => {
                         </h1>
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             );

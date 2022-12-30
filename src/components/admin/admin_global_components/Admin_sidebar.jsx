@@ -234,14 +234,14 @@ const Admin_sidebar = () => {
             <div className="flex items-center">
               <div>
                 <div className="bg-white aspect-square w-[45px] rounded-full  flex justify-center items-center tracking-widest text-[#FC8D0B] font-semibold">
-                  VK
+                  AD
                 </div>
               </div>
               <div className="ml-2">
                 <h1 className="text-white font-medium tracking-wider text-lg">
-                  Vivek Khanal
+                  Admin
                 </h1>
-                <h1 className="text-gray-200 ">vivek.k@ekoinfomatics.com</h1>
+                {/* <h1 className="text-gray-200 ">vivek.k@ekoinfomatics.com</h1> */}
               </div>
             </div>
             {localStorage.getItem("token") && (

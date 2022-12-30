@@ -74,17 +74,9 @@ const AdminHomePage = () => {
           return data?.section_data[6]?.content;
         })
     );
-
-    console.log("##############  PAGE DATA ####################:");
-    console.log(pageData);
   }, [activeSection, pageData]);
 
   const hiddenFileInput = React.useRef(null);
-
-  const handleClick = (event) => {
-    console.log("clicked");
-    hiddenFileInput.current.click();
-  };
 
   return (
     <div className="bg-[#FFF6EB] min-h-screen font-inter pb-52">
@@ -101,11 +93,16 @@ const AdminHomePage = () => {
           <div>
             <button
               onClick={() => {
-                axios
-                  .put(VITE_BASE_LINK + "home_page", pageData)
-                  .then((response) => {
-                    console.log(response?.data);
-                  });
+                let cnfText = confirm("Do you want to pulished the data now?");
+
+                if (cnfText) {
+                  axios
+                    .put(VITE_BASE_LINK + "home_page", pageData)
+                    .then((response) => {
+                      console.log(response?.data);
+                      alert("Your data is published!");
+                    });
+                }
               }}
               className="p-3 px-5 bg-[#FF440D] text-white rounded-lg transition-all active:scale-95 "
             >
@@ -197,7 +194,8 @@ const AdminHomePage = () => {
                       if (sectionData?.type === "image") {
                         return (
                           <>
-                            {sectionData?.link_status == true > 1 ? (
+                            {sectionData?.link_status == true &&
+                            sectionData?.content?.length > 1 ? (
                               <div key={sectionIndex}>
                                 {/* left image */}
                                 <div className="my-10 ">
@@ -1002,25 +1000,35 @@ const AdminHomePage = () => {
                       <button
                         className=" h-full "
                         onClick={async () => {
-                          const deleteSection = await axios
-                            .delete(VITE_BASE_LINK + "addSectionLandingPage", {
-                              data: {
-                                section_id: data?.section_id,
-                              },
-                            })
-                            .then((response) => {
-                              console.log("response of section add:");
-                              console.log(response);
-                            });
+                          let cnfText = confirm(
+                            "Do you want to delete this section?"
+                          );
 
-                          const homePageData = await axios
-                            .get(VITE_BASE_LINK + "home_page")
-                            .then((response) => {
-                              setActiveSection(
-                                response?.data?.all_sections[0]?.section_name
-                              );
-                              setPageData(response?.data);
-                            });
+                          if (cnfText) {
+                            const deleteSection = await axios
+                              .delete(
+                                VITE_BASE_LINK + "addSectionLandingPage",
+                                {
+                                  data: {
+                                    section_id: data?.section_id,
+                                  },
+                                }
+                              )
+                              .then((response) => {
+                                console.log("response of section add:");
+                                console.log(response);
+                              });
+
+                            const homePageData = await axios
+                              .get(VITE_BASE_LINK + "home_page")
+                              .then((response) => {
+                                setActiveSection(
+                                  response?.data?.all_sections[0]?.section_name
+                                );
+                                setPageData(response?.data);
+                                alert("Section deleted successfully");
+                              });
+                          }
                         }}
                       >
                         {activeSection === data?.section_name ? (
@@ -1106,6 +1114,7 @@ const AdminHomePage = () => {
                           ]?.section_name
                         );
                         setPageData(response?.data);
+                        alert("Section added sucessfully");
                       });
                   }}
                   className="p-3 px-5 bg-[#FF440D] text-white rounded-lg transition-all active:scale-95"

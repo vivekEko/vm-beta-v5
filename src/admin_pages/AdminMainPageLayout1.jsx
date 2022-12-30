@@ -44,11 +44,18 @@ const AdminMainPageLayout1 = () => {
           <div className="flex-1 ">
             <button
               onClick={() => {
-                axios
-                  .put(VITE_BASE_LINK + pathname?.sub_admin_page_name, pageData)
-                  .then((response) => {
-                    console.log(response?.data);
-                  });
+                let cnfText = confirm("Do you want to pulished the data now?");
+
+                if (cnfText) {
+                  axios
+                    .put(
+                      VITE_BASE_LINK + pathname?.sub_admin_page_name,
+                      pageData
+                    )
+                    .then((response) => {
+                      alert("Your data is published!");
+                    });
+                }
               }}
               className="block ml-auto p-3 px-5 bg-[#FF440D] text-white rounded-lg transition-all active:scale-95 "
             >
@@ -201,6 +208,7 @@ const AdminMainPageLayout1 = () => {
                   .then((response) => {
                     setPageData(response?.data);
                     setImageArray(response?.data?.all_input_fields[1]?.content);
+                    alert("Sub page added sucessfully");
                   });
               }}
               className="active:scale-95 transition-all"
@@ -226,11 +234,13 @@ const AdminMainPageLayout1 = () => {
                 </div>
 
                 <div className="flex gap-5 items-center p-5">
-                  <img
-                    src={edit_icon}
-                    alt="edit"
-                    className="cursor-pointer min-w-[20px] transition-all active:scale-95"
-                  />
+                  <Link to={data?.subpage_link}>
+                    <img
+                      src={edit_icon}
+                      alt="edit"
+                      className="cursor-pointer min-w-[20px] transition-all active:scale-95"
+                    />
+                  </Link>
                   <img
                     src={delete_icon}
                     alt="delete"
@@ -238,27 +248,34 @@ const AdminMainPageLayout1 = () => {
                       index === 0 ? "hidden" : ""
                     } cursor-pointer min-w-[20px] transition-all active:scale-95 `}
                     onClick={async () => {
-                      const deleteSubPage = await axios
-                        .delete(
-                          VITE_BASE_LINK + pathname?.sub_admin_page_name,
-                          {
-                            data: {
-                              id: data?.id,
-                            },
-                          }
-                        )
-                        .then((response) => {
-                          console.log(response?.data);
-                        });
+                      let cnfText = confirm(
+                        "Do you want to delete this sub page?"
+                      );
 
-                      const allPageData = await axios
-                        .get(VITE_BASE_LINK + pathname?.sub_admin_page_name)
-                        .then((response) => {
-                          setPageData(response?.data);
-                          setImageArray(
-                            response?.data?.all_input_fields[1]?.content
-                          );
-                        });
+                      if (cnfText) {
+                        const deleteSubPage = await axios
+                          .delete(
+                            VITE_BASE_LINK + pathname?.sub_admin_page_name,
+                            {
+                              data: {
+                                id: data?.id,
+                              },
+                            }
+                          )
+                          .then((response) => {
+                            console.log(response?.data);
+                          });
+
+                        const allPageData = await axios
+                          .get(VITE_BASE_LINK + pathname?.sub_admin_page_name)
+                          .then((response) => {
+                            setPageData(response?.data);
+                            setImageArray(
+                              response?.data?.all_input_fields[1]?.content
+                            );
+                            alert("Sub page deleted sucessfully");
+                          });
+                      }
                     }}
                   />
                   <img
