@@ -163,7 +163,11 @@ const SecondaryLayout_1 = () => {
           {/* content flex */}
           <div className=" mt-10 flex flex-col md:flex-row gap-5 md:w-[95%] ml-auto pb-16 ">
             <div className="md:w-[30%] w-[90%] mx-auto">
-              <img src={frame} alt="..." className="w-[50%] md:w-full " />
+              <img
+                src={VITE_BASE_LINK + pageData?.content?.image}
+                alt="..."
+                className="w-[50%] md:w-full "
+              />
             </div>
 
             <div className="md:w-full ">
@@ -186,10 +190,20 @@ const SecondaryLayout_1 = () => {
                   );
                 })}
               </div>
-              <div className="font-caladea sm:text-lg xl:text-xl pt-10 w-[90%] mx-auto md:w-full ">
-                <p className="  md:w-[93%]">
-                  {pageData?.tab_data[activeTab]?.content[0]?.data}
-                </p>
+              <div className="font-caladea sm:text-lg xl:text-xl pt-10 w-[90%] mx-auto md:w-full   md:max-h-[45%] l">
+                {pageData?.tab_data[activeTab]?.content?.map((data, index) => {
+                  if (data?.type === "text") {
+                    return <p className="  my-5 md:w-[93%]">{data?.data}</p>;
+                  }
+
+                  if (data?.type === "image") {
+                    return (
+                      <div className=" my-5  md:w-[93%]">
+                        <img src={VITE_BASE_LINK + data?.data} alt="" />
+                      </div>
+                    );
+                  }
+                })}
               </div>
             </div>
           </div>

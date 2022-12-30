@@ -198,31 +198,39 @@ const AdminSubPageLayout1 = () => {
   useEffect(() => {
     setBriefData(
       pageData?.all_tabs
-        ?.filter((filter_data) => {
-          if (filter_data?.tab_name === activeTab) {
-            return filter_data;
+        ?.filter((filteredData) => {
+          if (activeTab?.includes(filteredData?.tab_name)) {
+            return filteredData;
           }
         })
         ?.map((data) => {
-          return data?.tab_data[0];
+          return data?.tab_data;
         })
     );
+
+    // setBriefData(
+    //   pageData?.all_tabs?.map((data) => {
+    //     if (activeTab?.includes(data?.tab_name)) {
+    //       return data?.tab_data;
+    //     }
+    //   })
+    // );
   }, [activeTab]);
 
-  useEffect(() => {
-    setPageData({
-      ...pageData,
-      all_tabs: pageData?.all_tabs?.map((data) => {
-        if (activeTab === data?.tab_name) {
-          return {
-            ...data,
-            tab_data: briefData,
-          };
-        }
-        return data;
-      }),
-    });
-  }, [briefData]);
+  // useEffect(() => {
+  //   setPageData({
+  //     ...pageData,
+  //     all_tabs: pageData?.all_tabs?.map((data) => {
+  //       if (activeTab === data?.tab_name) {
+  //         return {
+  //           ...data,
+  //           tab_data: briefData,
+  //         };
+  //       }
+  //       return data;
+  //     }),
+  //   });
+  // }, [briefData]);
 
   useEffect(() => {
     console.log("####### briefData  #####", briefData);
@@ -249,7 +257,7 @@ const AdminSubPageLayout1 = () => {
             <button
               onClick={() => {
                 axios
-                  .post(
+                  .put(
                     VITE_BASE_LINK +
                       location?.sub_admin_page_name +
                       "?page_id=" +
@@ -273,6 +281,42 @@ const AdminSubPageLayout1 = () => {
 
         <div className=" mt-10 flex items-start gap-5 text-[#232325] ">
           <div className="w-full">
+            {/* tab name */}
+            <div className="bg-white p-5 rounded-lg mb-5 border-[#E0E2E7] border">
+              <div className="flex items-center gap-5  border-b-[#E0E2E7] border-b pb-5">
+                <h1 className="font-semibold">Tab Name</h1>
+              </div>
+
+              <div className="mt-5">
+                <textarea
+                  type="text"
+                  rows={1}
+                  value={pageData?.all_tabs
+                    ?.filter((filtered_data) => {
+                      if (filtered_data?.tab_name?.includes(activeTab)) {
+                        return filtered_data;
+                      }
+                    })
+                    ?.map((data) => {
+                      return data?.tab_name;
+                    })}
+                  onClick={() => setActiveInput(pageData?.tab_id)}
+                  onChange={(e) => {
+                    setPageData({
+                      ...pageData,
+                      all_tabs: pageData?.all_tabs?.map((data) => {
+                        return {
+                          ...data,
+                          tab_name: e?.target?.value,
+                        };
+                      }),
+                    });
+                  }}
+                  className="w-full outline-none border-0"
+                />
+              </div>
+            </div>
+
             {/* Heading */}
             <div className="bg-white p-5 rounded-lg mb-5 border-[#E0E2E7] border">
               <div className="flex items-center gap-5  border-b-[#E0E2E7] border-b pb-5">
@@ -282,7 +326,7 @@ const AdminSubPageLayout1 = () => {
               <div className="mt-5">
                 <textarea
                   type="text"
-                  rows={5}
+                  rows={2}
                   value={pageData?.heading}
                   onClick={() => setActiveInput(pageData?.tab_id)}
                   onChange={(e) => {
@@ -305,7 +349,7 @@ const AdminSubPageLayout1 = () => {
               <div className="mt-5">
                 <textarea
                   type="text"
-                  rows={5}
+                  rows={2}
                   value={pageData?.subheading}
                   onClick={() => setActiveInput(pageData?.tab_id)}
                   onChange={(e) => {
@@ -322,7 +366,7 @@ const AdminSubPageLayout1 = () => {
             {/* image */}
             <div className="my-10 ">
               <div className="flex items-center gap-5">
-                <h1 className="font-semibold">Cover Image</h1>
+                <h1 className="font-semibold">Content Image</h1>
               </div>
               <div className="mt-2 bg-white  border border-dashed rounded-lg h-full min-h-[200px] border-[#E0E2E7] ">
                 <label
@@ -345,7 +389,7 @@ const AdminSubPageLayout1 = () => {
                   </div>
 
                   <img
-                    src={VITE_BASE_LINK + pageData?.cover_image}
+                    src={VITE_BASE_LINK + pageData?.content_image}
                     alt=""
                     className=""
                   />
@@ -354,79 +398,21 @@ const AdminSubPageLayout1 = () => {
                     className="opacity-0 cursor-pointer inset-0 "
                     id="upload-image"
                     type="file"
-                    // onClick={() =>
-                    //   setActiveInput(
-                    //     data_contents?.id
-                    //   )
-                    // }
-                    // onChange={(e) => {
-                    //   let formdata = new FormData();
-                    //   formdata.append(
-                    //     "file",
-                    //     e?.target?.files[0]
-                    //   );
-                    //   formdata.append("index", 0);
-                    //   formdata.append(
-                    //     "image_array",
-                    //     imageArray
-                    //   );
+                    onChange={(e) => {
+                      let formdata = new FormData();
+                      formdata.append("file", e?.target?.files[0]);
+                      formdata.append("index", 0);
+                      formdata.append("image_array", "abcd");
 
-                    //   axios
-                    //     .post(
-                    //       VITE_BASE_LINK +
-                    //         "newImageUpload",
-                    //       formdata
-                    //     )
-                    //     .then((response) => {
-                    //       const newState =
-                    //         data?.tab_data?.map(
-                    //           (obj) => {
-                    //             return {
-                    //               ...obj,
-                    //               content:
-                    //                 obj?.content?.map(
-                    //                   (obj2) => {
-                    //                     if (
-                    //                       activeInput ===
-                    //                       obj2?.id
-                    //                     ) {
-                    //                       return {
-                    //                         ...obj2,
-                    //                         input_data:
-                    //                           response
-                    //                             ?.data
-                    //                             ?.array,
-                    //                       };
-                    //                     }
-                    //                     return obj2;
-                    //                   }
-                    //                 ),
-                    //             };
-                    //           }
-                    //         );
-
-                    //       setPageData({
-                    //         ...pageData,
-                    //         all_tabs:
-                    //           pageData?.all_tabs?.map(
-                    //             (data) => {
-                    //               if (
-                    //                 data?.tab_name ===
-                    //                 activeTab
-                    //               ) {
-                    //                 return {
-                    //                   ...data,
-                    //                   tab_data:
-                    //                     newState,
-                    //                 };
-                    //               }
-
-                    //               return data;
-                    //             }
-                    //           ),
-                    //       });
-                    //     });
-                    // }}
+                      axios
+                        .post(VITE_BASE_LINK + "newImageUpload", formdata)
+                        .then((response) => {
+                          setPageData({
+                            ...pageData,
+                            content_image: response?.data?.image_array[0],
+                          });
+                        });
+                    }}
                   />
                 </label>
               </div>
@@ -445,17 +431,42 @@ const AdminSubPageLayout1 = () => {
                       const formdata = new FormData();
                       formdata?.append("id", pageData?.new_id);
                       formdata?.append("type", "text");
-                      formdata?.append("dataArray", JSON.stringify(briefData));
+                      formdata?.append(
+                        "dataArray",
+                        JSON.stringify(
+                          pageData?.all_tabs
+                            ?.filter((filtered_data) => {
+                              if (filtered_data?.tab_name === activeTab) {
+                                return filtered_data;
+                              }
+                            })
+                            ?.map((data) => {
+                              return data?.tab_data;
+                            })
+                        )
+                      );
+                      formdata?.append(
+                        "tabId",
+                        JSON.stringify(
+                          pageData?.all_tabs
+                            ?.filter((filtered_data) => {
+                              if (filtered_data?.tab_name === activeTab) {
+                                return filtered_data;
+                              }
+                            })
+                            ?.map((data) => {
+                              return data?.tab_id;
+                            })
+                        )
+                      );
+                      formdata?.append("pageData", JSON.stringify(pageData));
 
                       axios
                         .post(VITE_BASE_LINK + "adminAddNewTabData", formdata)
                         .then((response) => {
                           console.log("response", response);
-                          setBriefData(response?.data);
-                          setPageData({
-                            ...pageData,
-                            new_id: pageData?.new_id + 1,
-                          });
+                          // setBriefData(response?.data);
+                          setPageData(response?.data);
                         });
                     }}
                     className="p-3 px-5 border-gray-500 hover:border-transparent border hover:bg-[#FF440D] hover:text-white rounded-lg transition-all active:scale-95"
@@ -479,8 +490,33 @@ const AdminSubPageLayout1 = () => {
                         formdata?.append("type", "image");
                         formdata?.append(
                           "dataArray",
-                          JSON.stringify(briefData)
+                          JSON.stringify(
+                            pageData?.all_tabs
+                              ?.filter((filtered_data) => {
+                                if (filtered_data?.tab_name === activeTab) {
+                                  return filtered_data;
+                                }
+                              })
+                              ?.map((data) => {
+                                return data?.tab_data;
+                              })
+                          )
                         );
+                        formdata?.append(
+                          "tabId",
+                          JSON.stringify(
+                            pageData?.all_tabs
+                              ?.filter((filtered_data) => {
+                                if (filtered_data?.tab_name === activeTab) {
+                                  return filtered_data;
+                                }
+                              })
+                              ?.map((data) => {
+                                return data?.tab_id;
+                              })
+                          )
+                        );
+                        formdata?.append("pageData", JSON.stringify(pageData));
 
                         axios
                           .post(
@@ -489,54 +525,89 @@ const AdminSubPageLayout1 = () => {
                           )
                           .then((response) => {
                             console.log("response", response);
-                            setBriefData(response?.data);
-                            setPageData({
-                              ...pageData,
-                              new_id: pageData?.new_id + 1,
-                            });
+                            setPageData(response?.data);
                           });
                       }}
                     />
                   </lable>
                 </div>
               </div>
-              <div className="w-full  pt-10  ">
-                {briefData?.map((data, index) => {
-                  return (
-                    <div key={index} className="">
-                      {data?.type === "text" && (
-                        <div className="bg-white p-5 rounded-lg mb-5 ">
-                          <textarea
-                            type="text"
-                            rows={10}
-                            value={data?.data}
-                            onClick={() => setActiveInput(data?.id)}
-                            onChange={(e) => {
-                              setBriefData(
-                                briefData?.map((datas) => {
-                                  if (activeInput === datas?.id) {
-                                    return {
-                                      ...datas,
-                                      data: e?.target?.value,
-                                    };
-                                  }
-                                  return datas;
-                                })
-                              );
-                            }}
-                            className="w-full outline-none border my-5"
-                          />
-                        </div>
-                      )}
 
-                      {data?.type === "image" && (
-                        <div className="bg-white p-5 rounded-lg mb-5 ">
-                          <img src={VITE_BASE_LINK + data?.data} alt="" />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
+              <div className="w-full  pt-10  ">
+                {pageData?.all_tabs
+                  ?.filter((filtered_data) => {
+                    if (filtered_data?.tab_name?.includes(activeTab)) {
+                      return filtered_data;
+                    }
+                  })
+                  ?.map((data, index) => {
+                    return (
+                      <div key={index} className="">
+                        {data?.tab_data?.map((data2) => {
+                          return (
+                            <div>
+                              {data2?.type === "text" && (
+                                <div className="bg-white p-5 rounded-lg mb-5 ">
+                                  <textarea
+                                    type="text"
+                                    rows={10}
+                                    value={data2?.data}
+                                    onClick={() => setActiveInput(data2?.id)}
+                                    onChange={(e) => {
+                                      setPageData({
+                                        ...pageData,
+                                        all_tabs: pageData?.all_tabs
+                                          ?.filter((filtered_data) => {
+                                            if (
+                                              activeTab?.includes(
+                                                filtered_data?.tab_name
+                                              )
+                                            ) {
+                                              return filtered_data;
+                                            } else {
+                                              return filtered_data;
+                                            }
+                                          })
+                                          ?.map((data3) => {
+                                            return {
+                                              ...data3,
+                                              tab_data: data3?.tab_data?.map(
+                                                (data4) => {
+                                                  if (
+                                                    data4?.id == activeInput
+                                                  ) {
+                                                    return {
+                                                      ...data4,
+                                                      data: e?.target?.value,
+                                                    };
+                                                  } else {
+                                                    return data4;
+                                                  }
+                                                }
+                                              ),
+                                            };
+                                          }),
+                                      });
+                                    }}
+                                    className="w-full outline-none border my-5"
+                                  />
+                                </div>
+                              )}
+
+                              {data2?.type === "image" && (
+                                <div className="bg-white p-5 rounded-lg mb-5 ">
+                                  <img
+                                    src={VITE_BASE_LINK + data2?.data}
+                                    alt=""
+                                  />
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -604,101 +675,130 @@ const AdminSubPageLayout1 = () => {
                       </div>
                     )}
 
-                    {/* hide section */}
+                    {/* hide tab */}
                     <button
                       className=" h-full  "
                       onClick={async () => {
-                        const hideSection = await axios
-                          .put(VITE_BASE_LINK + "addSectionLandingPage", {
-                            data: {
-                              section_id: data?.section_id,
-                              current_status: data?.status,
-                            },
-                          })
+                        const hidetab = await axios
+                          .patch(
+                            VITE_BASE_LINK +
+                              location?.sub_admin_page_name +
+                              "?page_id=" +
+                              location?.sub_page_id,
+                            {
+                              data: {
+                                tab_id: pageData?.all_tabs
+                                  ?.filter((filter_data) => {
+                                    if (filter_data?.tab_name === activeTab) {
+                                      return filter_data?.tab_id;
+                                    }
+                                  })
+                                  ?.map((data) => {
+                                    return data?.tab_id;
+                                  }),
+                              },
+                            }
+                          )
                           .then((response) => {
                             console.log("response of section edit:");
                             console.log(response);
                           });
 
                         const homePageData = await axios
-                          .get(VITE_BASE_LINK + "home_page")
+                          .get(
+                            VITE_BASE_LINK +
+                              location?.sub_admin_page_name +
+                              "?page_id=" +
+                              location?.sub_page_id
+                          )
                           .then((response) => {
                             setActiveTab(response?.data?.all_tabs[0]?.tab_name);
                             setPageData(response?.data);
                           });
                       }}
                     >
-                      {data?.tab_name !== "Section 1" && (
-                        <div>
-                          {activeTab === data?.tab_name ? (
-                            <img
-                              src={
-                                data?.status
-                                  ? eye_open_active
-                                  : eye_close_active
-                              }
-                              alt="visible"
-                              className="p-3 rounded-lg font-medium min-w-[40px] "
-                            />
-                          ) : (
-                            <img
-                              src={
-                                data?.status
-                                  ? eye_open_inactive
-                                  : eye_close_inactive
-                              }
-                              alt="invisilble"
-                              className="p-3 rounded-lg font-medium min-w-[40px] "
-                            />
-                          )}
-                        </div>
-                      )}
-                    </button>
-
-                    {/* delete section */}
-                    {data?.tab_name === "Section 1" ||
-                    data?.tab_name === "Section 2" ? (
-                      ""
-                    ) : (
-                      <button
-                        className=" h-full "
-                        onClick={async () => {
-                          const deleteSection = await axios
-                            .delete(VITE_BASE_LINK + "addSectionLandingPage", {
-                              data: {
-                                section_id: data?.section_id,
-                              },
-                            })
-                            .then((response) => {
-                              console.log("response of section add:");
-                              console.log(response);
-                            });
-
-                          const homePageData = await axios
-                            .get(VITE_BASE_LINK + "home_page")
-                            .then((response) => {
-                              setActiveTab(
-                                response?.data?.all_tabs[0]?.tab_name
-                              );
-                              setPageData(response?.data);
-                            });
-                        }}
-                      >
+                      <div>
                         {activeTab === data?.tab_name ? (
                           <img
-                            src={delete_icon_active}
-                            alt="delete"
+                            src={
+                              data?.show_status
+                                ? eye_open_active
+                                : eye_close_active
+                            }
+                            alt="visible"
                             className="p-3 rounded-lg font-medium min-w-[40px] "
                           />
                         ) : (
                           <img
-                            src={delete_icon}
-                            alt="delete"
+                            src={
+                              data?.show_status
+                                ? eye_open_inactive
+                                : eye_close_inactive
+                            }
+                            alt="invisilble"
                             className="p-3 rounded-lg font-medium min-w-[40px] "
                           />
                         )}
-                      </button>
-                    )}
+                      </div>
+                    </button>
+
+                    {/* delete tab */}
+
+                    <button
+                      className=" h-full "
+                      onClick={async () => {
+                        const deleteTab = await axios
+                          .delete(
+                            VITE_BASE_LINK +
+                              location?.sub_admin_page_name +
+                              "?page_id=" +
+                              location?.sub_page_id,
+                            {
+                              data: {
+                                tab_id: pageData?.all_tabs
+                                  ?.filter((filter_data) => {
+                                    if (filter_data?.tab_name === activeTab) {
+                                      return filter_data?.tab_id;
+                                    }
+                                  })
+                                  ?.map((data) => {
+                                    return data?.tab_id;
+                                  }),
+                              },
+                            }
+                          )
+                          .then((response) => {
+                            console.log("response of tab delete:");
+                            console.log(response);
+                          });
+
+                        const homePageData = await axios
+                          .get(
+                            VITE_BASE_LINK +
+                              location?.sub_admin_page_name +
+                              "?page_id=" +
+                              location?.sub_page_id
+                          )
+                          .then((response) => {
+                            setActiveTab(response?.data?.all_tabs[0]?.tab_name);
+                            setPageData(response?.data);
+                          });
+                      }}
+                    >
+                      {activeTab === data?.tab_name ? (
+                        <img
+                          src={delete_icon_active}
+                          alt="delete"
+                          className="p-3 rounded-lg font-medium min-w-[40px] "
+                        />
+                      ) : (
+                        <img
+                          src={delete_icon}
+                          alt="delete"
+                          className="p-3 rounded-lg font-medium min-w-[40px] "
+                        />
+                      )}
+                    </button>
                   </div>
                 );
               })}
@@ -709,20 +809,28 @@ const AdminSubPageLayout1 = () => {
               <div className="flex  gap-5 mt-5">
                 <button
                   onClick={async () => {
-                    // let formdata = new FormData();
-                    // formdata?.append(
-                    //   "layout_type",
-                    //   newSectionActiveLayout?.backend_name
-                    // );
-                    const addNewSection = await axios
-                      .post(VITE_BASE_LINK + "addSectionLandingPage", formdata)
+                    let formdata = new FormData();
+                    formdata?.append("page_id", location?.sub_page_id);
+                    const addNewTab = await axios
+                      .post(
+                        VITE_BASE_LINK +
+                          location?.sub_admin_page_name +
+                          "?page_id=" +
+                          location?.sub_page_id,
+                        formdata
+                      )
                       .then((response) => {
-                        console.log("response of section add:");
+                        console.log("response of tab add:");
                         console.log(response);
                       });
 
                     const homePageData = await axios
-                      .get(VITE_BASE_LINK + "home_page")
+                      .get(
+                        VITE_BASE_LINK +
+                          location?.sub_admin_page_name +
+                          "?page_id=" +
+                          location?.sub_page_id
+                      )
                       .then((response) => {
                         setActiveTab(
                           response?.data?.all_tabs[
