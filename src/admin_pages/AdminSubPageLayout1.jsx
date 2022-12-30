@@ -547,7 +547,12 @@ const AdminSubPageLayout1 = () => {
                           return (
                             <div>
                               {data2?.type === "text" && (
-                                <div className="bg-white p-5 rounded-lg mb-5 ">
+                                <div className="bg-white  rounded-lg border border-transparent hover:border-gray-200 mb-2 p-5  group">
+                                  <div>
+                                    <button className="ml-auto block rounded-full w-[40px] aspect-square bg-[#ff440d] text-white p-2 group-hover:opacity-100 opacity-0 transition-all ">
+                                      x
+                                    </button>
+                                  </div>
                                   <textarea
                                     type="text"
                                     rows={10}
@@ -589,16 +594,17 @@ const AdminSubPageLayout1 = () => {
                                           }),
                                       });
                                     }}
-                                    className="w-full outline-none border my-5"
+                                    className="w-full outline-none  "
                                   />
                                 </div>
                               )}
 
                               {data2?.type === "image" && (
-                                <div className="bg-white p-5 rounded-lg mb-5 ">
+                                <div className="bg-white p-5 rounded-lg mb-2 ">
                                   <img
                                     src={VITE_BASE_LINK + data2?.data}
                                     alt=""
+                                    className="w-full"
                                   />
                                 </div>
                               )}
