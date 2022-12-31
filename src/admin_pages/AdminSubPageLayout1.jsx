@@ -197,7 +197,7 @@ const AdminSubPageLayout1 = () => {
             })
         );
       });
-  }, []);
+  }, [location]);
 
   useEffect(() => {
     setBriefData(
@@ -812,7 +812,6 @@ const AdminSubPageLayout1 = () => {
                     </button>
 
                     {/* delete tab */}
-
                     <button
                       className=" h-full "
                       onClick={async () => {
@@ -879,7 +878,6 @@ const AdminSubPageLayout1 = () => {
             </div>
 
             <div className="mt-10">
-              <h1 className="font-semibold">Add Section</h1>
               <div className="flex  gap-5 mt-5">
                 <button
                   onClick={async () => {
@@ -912,9 +910,9 @@ const AdminSubPageLayout1 = () => {
                         alert("New tab added sucessfully");
                       });
                   }}
-                  className="p-3 px-5 bg-[#FF440D] text-white rounded-lg transition-all active:scale-95"
+                  className="w-full p-3 px-5 bg-[#FF440D] text-white rounded-lg transition-all active:scale-95"
                 >
-                  Add
+                  Add Tab
                 </button>
               </div>
             </div>

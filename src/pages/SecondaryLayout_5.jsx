@@ -25,102 +25,6 @@ const SecondaryLayout_5 = () => {
       });
   }, []);
 
-  // const pageData = {
-  //   title: "Jeeyar Paramapara",
-  //   jeeyars: [
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //     {
-  //       image: "",
-  //       name: "Sri madhurakavi vAnamAmalai jEEyar swamy",
-  //       prefix: "AD",
-  //       start_date: "2014",
-  //       end_date: "2020",
-  //       jeeyar_no: "30",
-  //       jeeyar_no_suffix: "th",
-  //     },
-  //   ],
-  // };
-
   return (
     <section className="">
       {/* banner */}
@@ -150,19 +54,22 @@ const SecondaryLayout_5 = () => {
                   </h1>
                   <div className="flex justify-between items-end ">
                     <h2 className="text-2xl">
-                      {data?.prefix +
-                        " " +
-                        data?.start_date +
-                        " to " +
-                        data?.end_date}
-                    </h2>
+                      {data?.prefix + " " + data?.start_date}
 
-                    <h1 className="text-2xl">
-                      {data?.jeeyar_no}{" "}
-                      <span className="text-sm uppercase">
-                        {data?.jeeyar_no_suffix}
-                      </span>
-                    </h1>
+                      {data?.end_date?.length > 0
+                        ? " to " + data?.end_date
+                        : ""}
+                    </h2>
+                    {data?.jeeyar_no ? (
+                      <h1 className="text-2xl">
+                        {data?.jeeyar_no}
+                        <span className="text-sm uppercase ml-1">
+                          {data?.jeeyar_no_suffix}
+                        </span>
+                      </h1>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>

@@ -25,6 +25,7 @@ import Admin_sidebar from "./components/admin/admin_global_components/Admin_side
 import AdminHomePage from "./admin_pages/AdminHomePage";
 import AdminMainPageLayout1 from "./admin_pages/AdminMainPageLayout1";
 import AdminSubPageLayout1 from "./admin_pages/AdminSubPageLayout1";
+import AdminJeeyaMainPage from "./admin_pages/AdminJeeyaMainPage";
 
 function App() {
   const [currentPath, setCurrentPath] = useRecoilState(currentPathAtom);
@@ -88,6 +89,11 @@ function App() {
             <Route
               path="/admin/sub_admin_page/:sub_admin_page_name/:sub_page_id"
               element={<AdminSubPageLayout1 />}
+            />
+
+            <Route
+              path="/admin/sub_admin_page/jeeyars_edit"
+              element={<AdminJeeyaMainPage />}
             />
           </Route>
 

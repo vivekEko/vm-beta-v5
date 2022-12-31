@@ -10,11 +10,7 @@ import { useRecoilState } from "recoil";
 import LandingPageDataAtom from "../recoil/pages/landingPage/LandingPageDataAtom";
 
 // components
-import HeroSection from "../components/landingPage/HeroSection";
-import SecondSection from "../components/landingPage/SecondSection";
-import ThirdSection from "../components/landingPage/ThirdSection";
-import FourthSection from "../components/landingPage/FourthSection";
-import FifthSection from "../components/landingPage/FifthSection";
+
 import Footer from "../components/globalComponents/Footer";
 import EventSection from "../components/landingPage/EventSection";
 import Section from "../components/landingPage/Section";
@@ -41,7 +37,7 @@ const Landing = () => {
     <div className="">
       {landingPageData?.data?.map((sectionData, sectionIndex) => {
         return (
-          <div key={sectionIndex} className="md:sticky top-0">
+          <div key={sectionIndex} className="">
             <Section apiData={sectionData} />
           </div>
         );

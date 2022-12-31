@@ -27,7 +27,7 @@ const AdminMainPageLayout1 = () => {
         setPageData(response?.data);
         setImageArray(response?.data?.all_input_fields[1]?.content);
       });
-  }, []);
+  }, [pathname]);
 
   return (
     <div className="bg-[#FFF6EB] min-h-screen font-inter pb-52">

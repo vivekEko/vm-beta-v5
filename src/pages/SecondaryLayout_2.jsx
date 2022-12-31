@@ -171,7 +171,6 @@ const SecondaryLayout_2 = () => {
     axios
       .get(VITE_BASE_LINK + "gallery_page")
       .then(function (response) {
-        console.log("gallery2 responsetala:", response?.data);
         setPageData(response?.data);
       })
       .catch(function (error) {

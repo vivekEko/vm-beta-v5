@@ -21,13 +21,13 @@ const Section = (props) => {
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl uppercase text-center font-medium bg-gradient-to-r to-[#630000] from-[#1400FF]  stroke-white stroke-2 bg-clip-text text-transparent text-stroke   md:min-h-[70px] xl:min-h-[90px] ">
                     {props?.apiData?.h1}
                   </h1>
-                  <h2 className="text-white text-[1.4rem] sm:text-[1.6rem] lg:text-3xl xl:text-5xl text-center mt-3 md:mt-5 uppercase">
+                  <h2 className="text-white text-[1.4rem] sm:text-[1.6rem] lg:text-3xl xl:text-4xl text-center mt-3 md:mt-5 uppercase">
                     {props?.apiData?.h2}
                   </h2>
 
                   <p
                     className="font-caladea sm:text-lg xl:text-xl   text-center mt-5 text-white sm:max-w-[80%] md:max-w-[70%]
-     lg:max-w-[60%] xl:max-w-[50%] mx-auto"
+     lg:max-w-[60%] xl:max-w-[60%] mx-auto"
                   >
                     {props?.apiData?.p}
                   </p>
@@ -116,9 +116,9 @@ const Section = (props) => {
                 {props?.apiData?.p}
               </p>
 
-              <button className="p-3 px-10 text-lg mt-20 bg-[#282626] text-white w-fit mx-auto block active:scale-95 transition-all">
+              {/* <button className="p-3 px-10 text-lg mt-20 bg-[#282626] text-white w-fit mx-auto block active:scale-95 transition-all">
                 <span>READ MORE</span>
-              </button>
+              </button> */}
             </div>
 
             <div className="mt-5 flex items-end justify-between gap-5 overflow-hidden">
@@ -159,11 +159,11 @@ const Section = (props) => {
                 {props?.apiData?.p}
               </p>
 
-              <div className="flex justify-center md:justify-start w-[80%] mx-auto ">
+              {/* <div className="flex justify-center md:justify-start w-[80%] mx-auto ">
                 <button className="p-3 px-10 text-lg mt-20 bg-[#282626] text-white w-fit  active:scale-95 transition-all">
                   READ MORE
                 </button>
-              </div>
+              </div> */}
             </div>
 
             <div className="hidden md:flex gap-5 items-start mt-5  w-[80%] mx-auto pb-5">
@@ -186,7 +186,7 @@ const Section = (props) => {
                   "fileDownload?file_name=" +
                   props?.apiData?.file_link
                 }
-                className="border block border-green-500"
+                className=" block "
               >
                 <img src={file_icon} alt="file" className="" />
                 <h3 className="uppercase   sm:text-lg xl:text-xl">
@@ -246,26 +246,41 @@ const Section = (props) => {
                 {props?.apiData?.p}
               </p>
 
-              <div className="flex justify-center md:justify-start w-[80%] mx-auto ">
+              {/* <div className="flex justify-center md:justify-start w-[80%] mx-auto ">
                 <button className="p-3 px-6 bg-[#282626] text-white w-fit active:scale-95 transition-all ">
                   READ MORE
                 </button>
-              </div>
+              </div> */}
             </div>
 
             <div className="hidden md:flex gap-5 items-start mt-5  w-[80%] mx-auto pb-5">
               <div>
-                <img src={youtube_icon} alt="youtube" />
-                <h3 className="uppercase sm:text-lg xl:text-xl">
-                  {props?.apiData?.yt_title}
-                </h3>
+                <a
+                  href={props?.apiData?.yt_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={youtube_icon} alt="youtube" />
+                  <h3 className="uppercase sm:text-lg xl:text-xl">
+                    {props?.apiData?.yt_title}
+                  </h3>
+                </a>
               </div>
 
               <div>
-                <img src={file_icon} alt="youtube" className="" />
-                <h3 className="uppercase sm:text-lg xl:text-xl">
-                  {props?.apiData?.file_title}
-                </h3>
+                <a
+                  href={
+                    VITE_BASE_LINK +
+                    "fileDownload?file_name=" +
+                    props?.apiData?.file_link
+                  }
+                  className=" block "
+                >
+                  <img src={file_icon} alt="youtube" className="" />
+                  <h3 className="uppercase sm:text-lg xl:text-xl">
+                    {props?.apiData?.file_title}
+                  </h3>
+                </a>
               </div>
             </div>
 
