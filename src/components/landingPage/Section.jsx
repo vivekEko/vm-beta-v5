@@ -8,7 +8,44 @@ import file_icon from "../../assets/img/landingPage/file_icon.png";
 import { HashRouter, Link } from "react-router-dom";
 import { VITE_BASE_LINK } from "../../base_link/BaseLink";
 
+import leftArrow from "../../assets/img/galleryPage/left_button.svg";
+import rightArrow from "../../assets/img/galleryPage/right_button.svg";
+import Slider from "react-slick";
+import YouTube from "react-youtube";
+
 const Section = (props) => {
+  // carousel buttons
+  const PreviousBtn = (props) => {
+    // console.log(props);
+    const { className, onClick } = props;
+    return (
+      <div className={` ${className} `} onClick={onClick}>
+        <img
+          src={leftArrow}
+          alt="previous"
+          className=" -translate-x-0 md:-translate-x-5 -translate-y-8   min-w-[25px] hidden md:block md:min-w-[50px] "
+        />
+      </div>
+    );
+  };
+  const NextBtn = (props) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <img
+          src={rightArrow}
+          alt="next"
+          className=" -translate-x-1  -translate-y-8   min-w-[25px] hidden md:block md:min-w-[50px]"
+        />
+      </div>
+    );
+  };
+
+  const opts = {
+    height: "300",
+    width: "100%",
+  };
+
   return (
     <div className="">
       {props?.apiData?.layout === "hero" && (
@@ -60,9 +97,68 @@ const Section = (props) => {
 
       {/*  */}
 
-      {props?.apiData?.layout === "event" && (
+      {props?.apiData?.layout === "gallery" && (
         <section
           id="landing_page_2"
+          style={{ backgroundColor: props?.apiData?.background_color }}
+          className={"  pt-20 border-b-[12px] border-[#942200]  pb-20"}
+        >
+          {/* carousel  */}
+          <div className="my-5 z-0  ">
+            <Slider
+              dots={false}
+              slidesToShow={3}
+              infinite
+              prevArrow={<PreviousBtn />}
+              nextArrow={<NextBtn />}
+              className="w-full  md:w-[90%] mx-auto"
+              // dotsClass="slick-dots custom-dots"
+              responsive={[
+                {
+                  breakpoint: 1200,
+                  settings: {
+                    slidesToShow: 2,
+                  },
+                },
+                {
+                  breakpoint: 768,
+                  settings: {
+                    slidesToShow: 1,
+                    dots: true,
+                  },
+                },
+              ]}
+            >
+              {props?.apiData?.carousel_data?.map((data, index) => {
+                return (
+                  <div key={index} className=" p-5 h-[350px] ">
+                    <YouTube
+                      // videoId={data?.video_id}
+                      videoId={
+                        data?.video_id
+                          .split("/")
+                          .reverse()[0]
+                          .includes("watch?v=")
+                          ? data?.video_id.split("watch?v=").reverse()[0]
+                          : data?.video_id.split("/").reverse()[0]
+                      }
+                      opts={opts}
+                      className="w-full  "
+                    />
+                    <h1 className="text-lg md:text-xl py-2">
+                      {data?.video_title}
+                    </h1>
+                  </div>
+                );
+              })}
+            </Slider>
+          </div>
+        </section>
+      )}
+
+      {props?.apiData?.layout === "event" && (
+        <section
+          // id="landing_page_2"
           style={{ backgroundColor: props?.apiData?.background_color }}
           className={"  pt-20 border-b-[12px] border-[#942200]  min-h-screen"}
         >
