@@ -73,11 +73,6 @@ const AdminJeeyaMainPage = () => {
     });
   }, [location]);
 
-  //   useEffect(() => {
-  //     console.log("######### PAGE DATA ###########", pageData);
-  //     console.log("######### ACTIVE JEEYAR ###########", activeJeeyar);
-  //   }, [pageData, activeJeeyar]);
-
   return (
     <div className="bg-[#FFF6EB] min-h-screen font-inter pb-52">
       <Admin_header />
@@ -165,8 +160,16 @@ const AdminJeeyaMainPage = () => {
                   </div>
 
                   <img
-                    // src={VITE_BASE_LINK + data?.content[0]}
-
+                    src={
+                      VITE_BASE_LINK +
+                      pageData?.jeeyar_list
+                        ?.filter((filter_data) => {
+                          if (activeJeeyar === filter_data?.id) {
+                            return filter_data;
+                          }
+                        })
+                        ?.map((data) => data?.image)
+                    }
                     alt=""
                     className=""
                   />
@@ -419,7 +422,7 @@ const AdminJeeyaMainPage = () => {
                     <h1 className="">{data?.name}</h1>
                   </button>
 
-                  {/* delete tab */}
+                  {/* edit tab */}
                   <button
                     className=" h-full "
                     //   onClick={async () => {
@@ -484,43 +487,22 @@ const AdminJeeyaMainPage = () => {
                   {/* hide tab */}
                   <button
                     className=" h-full  "
-                    //   onClick={async () => {
-                    //     const hidetab = await axios
-                    //       .patch(
-                    //         VITE_BASE_LINK +
-                    //           location?.sub_admin_page_name +
-                    //           "?page_id=" +
-                    //           location?.sub_page_id,
-                    //         {
-                    //           data: {
-                    //             tab_id: data?.tab_id,
+                    onClick={async () => {
+                      const hideJeeyar = await axios
+                        .patch(VITE_BASE_LINK + "jeeyars_edit", {
+                          data: {
+                            jeeyar_id: data?.id,
+                          },
+                        })
+                        .then((response) => {});
 
-                    //             // pageData?.all_tabs
-                    //             //   ?.filter((filter_data) => {
-                    //             //     if (filter_data?.tab_id === activeTab) {
-                    //             //       return filter_data?.tab_id;
-                    //             //     }
-                    //             //   })
-                    //             //   ?.map((data) => {
-                    //             //     return data?.tab_id;
-                    //             //   }),
-                    //           },
-                    //         }
-                    //       )
-                    //       .then((response) => {});
-
-                    //     const homePageData = await axios
-                    //       .get(
-                    //         VITE_BASE_LINK +
-                    //           location?.sub_admin_page_name +
-                    //           "?page_id=" +
-                    //           location?.sub_page_id
-                    //       )
-                    //       .then((response) => {
-                    //         setActiveTab(response?.data?.all_tabs[0]?.tab_id);
-                    //         setPageData(response?.data);
-                    //       });
-                    //   }}
+                      const pageData = await axios
+                        .get(VITE_BASE_LINK + "jeeyars_edit")
+                        .then((response) => {
+                          setActiveJeeyar(response?.data?.jeeyar_list[0]?.id);
+                          setPageData(response?.data);
+                        });
+                    }}
                   >
                     <div>
                       {activeJeeyar === data?.id ? (
@@ -550,49 +532,27 @@ const AdminJeeyaMainPage = () => {
                   {/* delete tab */}
                   <button
                     className=" h-full "
-                    //   onClick={async () => {
-                    //     let cnfText = confirm(
-                    //       "Do you want to delete this tab?"
-                    //     );
-                    //     if (cnfText) {
-                    //       const deleteTab = await axios
-                    //         .delete(
-                    //           VITE_BASE_LINK +
-                    //             location?.sub_admin_page_name +
-                    //             "?page_id=" +
-                    //             location?.sub_page_id,
-                    //           {
-                    //             data: {
-                    //               tab_id: data?.tab_id,
-                    //               // pageData?.all_tabs
-                    //               //   ?.filter((filter_data) => {
-                    //               //     if (filter_data?.tab_id === activeTab) {
-                    //               //       return filter_data?.tab_id;
-                    //               //     }
-                    //               //   })
-                    //               //   ?.map((data) => {
-                    //               //     return data?.tab_id;
-                    //               //   }),
-                    //             },
-                    //           }
-                    //         )
-                    //         .then((response) => {});
+                    onClick={async () => {
+                      let cnfText = confirm(
+                        "Do you want to delete this Jeeyar data?"
+                      );
+                      if (cnfText) {
+                        const deleteJeeyar = await axios
+                          .delete(VITE_BASE_LINK + "jeeyars_edit", {
+                            data: {
+                              jeeyar_id: data?.id,
+                            },
+                          })
+                          .then((response) => {});
 
-                    //       const homePageData = await axios
-                    //         .get(
-                    //           VITE_BASE_LINK +
-                    //             location?.sub_admin_page_name +
-                    //             "?page_id=" +
-                    //             location?.sub_page_id
-                    //         )
-                    //         .then((response) => {
-                    //           setActiveTab(response?.data?.all_tabs[0]?.tab_id);
-                    //           setPageData(response?.data);
-
-                    //           alert("Tab deleted sucessfully");
-                    //         });
-                    //     }
-                    //   }}
+                        const pageData = await axios
+                          .get(VITE_BASE_LINK + "jeeyars_edit")
+                          .then((response) => {
+                            setActiveJeeyar(response?.data?.jeeyar_list[0]?.id);
+                            setPageData(response?.data);
+                          });
+                      }
+                    }}
                   >
                     {activeJeeyar === data?.id ? (
                       <img
@@ -615,36 +575,25 @@ const AdminJeeyaMainPage = () => {
           <div className="mt-10">
             <div className="flex  gap-5 mt-5">
               <button
-                //   onClick={async () => {
-                //     let formdata = new FormData();
-                //     formdata?.append("page_id", location?.sub_page_id);
-                //     const addNewTab = await axios
-                //       .post(
-                //         VITE_BASE_LINK +
-                //           location?.sub_admin_page_name +
-                //           "?page_id=" +
-                //           location?.sub_page_id,
-                //         formdata
-                //       )
-                //       .then((response) => {});
+                onClick={async () => {
+                  let formdata = new FormData();
+                  // formdata?.append("page_id", location?.sub_page_id);
+                  const addNewJeeyar = await axios
+                    .post(VITE_BASE_LINK + "jeeyars_edit")
+                    .then((response) => {});
 
-                //     const homePageData = await axios
-                //       .get(
-                //         VITE_BASE_LINK +
-                //           location?.sub_admin_page_name +
-                //           "?page_id=" +
-                //           location?.sub_page_id
-                //       )
-                //       .then((response) => {
-                //         setActiveTab(
-                //           response?.data?.all_tabs[
-                //             response?.data?.all_tabs?.length - 1
-                //           ]?.tab_id
-                //         );
-                //         setPageData(response?.data);
-                //         alert("New tab added sucessfully");
-                //       });
-                //   }}
+                  const pageData = await axios
+                    .get(VITE_BASE_LINK + "jeeyars_edit")
+                    .then((response) => {
+                      setActiveJeeyar(
+                        response?.data?.jeeyar_list[
+                          response?.data?.jeeyar_list?.length - 1
+                        ]?.id
+                      );
+                      setPageData(response?.data);
+                      alert("New tab added sucessfully");
+                    });
+                }}
                 className="p-3 px-5 w-full bg-[#FF440D] text-white rounded-lg transition-all active:scale-95"
               >
                 Add Jeeyar

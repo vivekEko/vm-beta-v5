@@ -47,7 +47,13 @@ const SecondaryLayout_5 = () => {
               to={"/sub_page/" + pageData?.call_link + "/" + data?.id}
             >
               <div className="bg-[#FC8D0B] p-5 text-white">
-                <div className="bg-[#FFE8B1] aspect-video w-full"></div>
+                <div className="bg-[#FFE8B1] aspect-video w-full">
+                  <img
+                    src={VITE_BASE_LINK + data?.image}
+                    alt={data?.name}
+                    className="w-full"
+                  />
+                </div>
                 <div>
                   <h1 className="text-lg uppercase py-2 min-h-[90px] ">
                     {data?.name}

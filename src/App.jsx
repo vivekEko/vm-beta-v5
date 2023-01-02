@@ -74,7 +74,7 @@ function App() {
           />
           <Route path="/jeeyars" element={<SecondaryLayout_5 />} />
 
-          {/* <Route element={<ProtectedRoutes />}>
+          <Route element={<ProtectedRoutes />}>
             <Route
               path="/admin"
               element={<Navigate to="/admin/dashboard" replace={true} />}
@@ -95,11 +95,11 @@ function App() {
               path="/admin/sub_admin_page/jeeyars_edit"
               element={<AdminJeeyaMainPage />}
             />
-          </Route> */}
+          </Route>
 
-          {/* <Route element={<ProtectedFromAdmin />}>
+          <Route element={<ProtectedFromAdmin />}>
             <Route path="/login" element={<Login />} />
-          </Route> */}
+          </Route>
         </Routes>
       </div>
     </div>
