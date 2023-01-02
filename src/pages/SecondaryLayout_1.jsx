@@ -132,7 +132,7 @@ const SecondaryLayout_1 = () => {
     <section>
       {/* banner */}
       <div
-        className="bg-[#D9D9D9] bg-no-repeat bg-cover"
+        className="bg-[#D9D9D9] bg-no-repeat bg-cover bg-right-bottom min-h-[500px]"
         style={{
           backgroundImage:
             "url(" + VITE_BASE_LINK + pageData?.banner?.image + ")",
@@ -141,7 +141,7 @@ const SecondaryLayout_1 = () => {
         <Header_2 />
 
         <div className="w-[90%] mx-auto">
-          <h1 className="pb-5 md:pb-8  pt-60  uppercase text-3xl md:text-4xl xl:text-5xl lg:w-[70%] xl:w-[60%] 2xl:w-[50%]   font-bold text-[#292929] ">
+          <h1 className="pb-5 md:pb-8  pt-60  uppercase text-3xl md:text-4xl xl:text-5xl lg:w-[70%] xl:w-[60%] 2xl:w-[50%]   font-bold text-white  ">
             {pageData?.banner?.heading}
           </h1>
         </div>
@@ -163,11 +163,15 @@ const SecondaryLayout_1 = () => {
           {/* content flex */}
           <div className=" mt-10 flex flex-col md:flex-row gap-5 md:w-[95%] ml-auto pb-16 ">
             <div className="md:w-[30%] w-[90%] mx-auto">
-              <img
-                src={VITE_BASE_LINK + pageData?.content?.image}
-                alt="..."
-                className="w-[50%] md:w-full "
-              />
+              {pageData?.content?.image?.length > 0 ? (
+                <img
+                  src={VITE_BASE_LINK + pageData?.content?.image}
+                  alt="..."
+                  className="w-[50%] md:w-full "
+                />
+              ) : (
+                <div className="w-full bg-[#ffe8b1] aspect-[3/3.5]"></div>
+              )}
             </div>
 
             <div className="md:w-full ">

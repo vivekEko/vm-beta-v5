@@ -47,6 +47,8 @@ const AdminHomePage = () => {
     axios.get(VITE_BASE_LINK + "home_page").then((response) => {
       setActiveSection(response?.data?.all_sections[0]?.section_name);
       setPageData(response?.data);
+
+      console.log(response?.data);
     });
   }, []);
 
@@ -819,7 +821,6 @@ const AdminHomePage = () => {
                                       formdata
                                     )
                                     .then((response) => {
-                                      console.log(response?.data);
                                       const newState = data?.section_data?.map(
                                         (obj) => {
                                           if (obj.id === activeInput) {

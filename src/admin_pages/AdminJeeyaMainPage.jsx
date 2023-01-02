@@ -13,7 +13,7 @@ import eye_close_inactive from "../assets/img/admin/home_edit/eye_close.svg";
 import eye_close_active from "../assets/img/admin/home_edit/eye_close_active.svg";
 import axios from "axios";
 import { VITE_BASE_LINK } from "../base_link/BaseLink";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const AdminJeeyaMainPage = () => {
   const pageData2 = {
@@ -125,6 +125,60 @@ const AdminJeeyaMainPage = () => {
                 }}
                 className="w-full outline-none border-0"
               />
+            </div>
+          </div>
+
+          {/* jeeyar banner image */}
+
+          <div className="my-10 ">
+            <div className="flex items-center gap-5">
+              <h1 className="font-semibold">Banner Image</h1>
+            </div>
+            <div className="mt-2 bg-white  border border-dashed rounded-lg h-full min-h-[200px] border-[#E0E2E7] ">
+              <label
+                // onClick={handleClick}
+                htmlFor="upload-banner-image"
+                className="flex flex-col  justify-center items-center h-full min-h-[200px] border cursor-pointer group transition-all relative z-20"
+              >
+                <div className=" flex-col justify-center items-center absolute bg-black bg-opacity-95 inset-0 hidden group-hover:flex transition-all duration-[1000] ">
+                  <img
+                    src={image_icon}
+                    alt="upload image"
+                    className="w-[50px] block "
+                  />
+                  <h1 className="font-semibold block">
+                    <span className="text-[#FF440D] ">Upload an image</span>
+                  </h1>
+                  <h2 className=" block text-white">PNG, JPG, GIF up to 5MB</h2>
+                </div>
+
+                <img
+                  src={VITE_BASE_LINK + pageData?.banner_image}
+                  alt=""
+                  className=""
+                />
+                <input
+                  // ref={hiddenFileInput}
+                  className="opacity-0 cursor-pointer inset-0 "
+                  id="upload-banner-image"
+                  type="file"
+                  onChange={(e) => {
+                    let formdata = new FormData();
+                    formdata.append("file", e?.target?.files[0]);
+                    formdata.append("index", 0);
+                    formdata.append("image_array", "abcd");
+
+                    axios
+                      .post(VITE_BASE_LINK + "newImageUpload", formdata)
+                      .then((response) => {
+                        setPageData({
+                          ...pageData,
+                          banner_image: response?.data?.image_array[0],
+                        });
+                      });
+                  }}
+                />
+              </label>
             </div>
           </div>
 
@@ -423,52 +477,7 @@ const AdminJeeyaMainPage = () => {
                   </button>
 
                   {/* edit tab */}
-                  <button
-                    className=" h-full "
-                    //   onClick={async () => {
-                    //     let cnfText = confirm(
-                    //       "Do you want to delete this tab?"
-                    //     );
-                    //     if (cnfText) {
-                    //       const deleteTab = await axios
-                    //         .delete(
-                    //           VITE_BASE_LINK +
-                    //             location?.sub_admin_page_name +
-                    //             "?page_id=" +
-                    //             location?.sub_page_id,
-                    //           {
-                    //             data: {
-                    //               tab_id: data?.tab_id,
-                    //               // pageData?.all_tabs
-                    //               //   ?.filter((filter_data) => {
-                    //               //     if (filter_data?.tab_id === activeTab) {
-                    //               //       return filter_data?.tab_id;
-                    //               //     }
-                    //               //   })
-                    //               //   ?.map((data) => {
-                    //               //     return data?.tab_id;
-                    //               //   }),
-                    //             },
-                    //           }
-                    //         )
-                    //         .then((response) => {});
-
-                    //       const homePageData = await axios
-                    //         .get(
-                    //           VITE_BASE_LINK +
-                    //             location?.sub_admin_page_name +
-                    //             "?page_id=" +
-                    //             location?.sub_page_id
-                    //         )
-                    //         .then((response) => {
-                    //           setActiveTab(response?.data?.all_tabs[0]?.tab_id);
-                    //           setPageData(response?.data);
-
-                    //           alert("Tab deleted sucessfully");
-                    //         });
-                    //     }
-                    //   }}
-                  >
+                  <Link to={data?.sub_page_link} className=" h-full ">
                     {activeJeeyar === data?.id ? (
                       <img
                         src={edit_icon_active}
@@ -482,7 +491,7 @@ const AdminJeeyaMainPage = () => {
                         className="p-3 rounded-lg font-medium min-w-[40px] "
                       />
                     )}
-                  </button>
+                  </Link>
 
                   {/* hide tab */}
                   <button
@@ -596,7 +605,7 @@ const AdminJeeyaMainPage = () => {
                 }}
                 className="p-3 px-5 w-full bg-[#FF440D] text-white rounded-lg transition-all active:scale-95"
               >
-                Add Jeeyar
+                Add New Jeeyar
               </button>
             </div>
           </div>

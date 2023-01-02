@@ -99,7 +99,7 @@ const Section = (props) => {
 
       {props?.apiData?.layout === "gallery" && (
         <section
-          id="landing_page_2"
+          // id="landing_page_2"
           style={{ backgroundColor: props?.apiData?.background_color }}
           className={"  pt-20 border-b-[12px] border-[#942200]  pb-20"}
         >
@@ -158,11 +158,11 @@ const Section = (props) => {
 
       {props?.apiData?.layout === "event" && (
         <section
-          // id="landing_page_2"
+          id="landing_page_2"
           style={{ backgroundColor: props?.apiData?.background_color }}
           className={"  pt-20 border-b-[12px] border-[#942200]  min-h-screen"}
         >
-          <div className="flex flex-col gap-5 justify-between h-full">
+          <div className="flex flex-col gap-10 justify-between h-full">
             <div>
               <h1 className="uppercase text-[#191689] text-[1.4rem] sm:text-[1.6rem] lg:text-3xl xl:text-5xl  font-semibold text-center">
                 {props?.apiData?.h1}
@@ -172,11 +172,11 @@ const Section = (props) => {
               </h2>
             </div>
 
-            <div>
+            <div className="flex-1">
               <img
                 src={VITE_BASE_LINK + props?.apiData?.img[0]}
                 alt=""
-                className="mx-auto"
+                className="mx-auto w-[80%]"
               />
             </div>
 

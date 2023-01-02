@@ -23,9 +23,9 @@ const Header_2 = () => {
       </div>
 
       <div className="flex flex-col justify-center gap-2 md:gap-10 md:flex-row items-center mt-5 sm:text-lg xl:text-xl ">
-        <h1 className="uppercase text-black">Srimathe Ramanujaya Nama:</h1>
-        <h1 className="uppercase text-black">Srimath Varavaramunaye Nama:</h1>
-        <h1 className="uppercase text-black">
+        <h1 className="uppercase text-white">Srimathe Ramanujaya Nama:</h1>
+        <h1 className="uppercase text-white">Srimath Varavaramunaye Nama:</h1>
+        <h1 className="uppercase text-white">
           Sri vanachaLa Mahamunibyo Nama:
         </h1>
       </div>

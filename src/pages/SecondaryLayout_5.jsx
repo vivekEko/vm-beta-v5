@@ -45,14 +45,17 @@ const SecondaryLayout_5 = () => {
             <Link
               key={index}
               to={"/sub_page/" + pageData?.call_link + "/" + data?.id}
+              className="aspect-video object-contain"
             >
               <div className="bg-[#FC8D0B] p-5 text-white">
-                <div className="bg-[#FFE8B1] aspect-video w-full">
-                  <img
-                    src={VITE_BASE_LINK + data?.image}
-                    alt={data?.name}
-                    className="w-full"
-                  />
+                <div className="bg-[#FFE8B1] aspect-[1/1] object-fill  ">
+                  {data?.image && (
+                    <img
+                      src={VITE_BASE_LINK + data?.image}
+                      alt={data?.name}
+                      className="mx-auto h-full w-full "
+                    />
+                  )}
                 </div>
                 <div>
                   <h1 className="text-lg uppercase py-2 min-h-[90px] ">
