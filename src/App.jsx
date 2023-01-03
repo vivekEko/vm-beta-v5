@@ -26,6 +26,9 @@ import AdminHomePage from "./admin_pages/AdminHomePage";
 import AdminMainPageLayout1 from "./admin_pages/AdminMainPageLayout1";
 import AdminSubPageLayout1 from "./admin_pages/AdminSubPageLayout1";
 import AdminJeeyaMainPage from "./admin_pages/AdminJeeyaMainPage";
+import AdminGalleryMainPage from "./admin_pages/AdminGalleryMainPage";
+import AdminSubAlbumPage from "./admin_pages/AdminSubAlbumPage";
+import AdminAlbumPage from "./admin_pages/AdminAlbumPage";
 
 function App() {
   const [currentPath, setCurrentPath] = useRecoilState(currentPathAtom);
@@ -39,6 +42,20 @@ function App() {
 
   return (
     <div className="font-oswald cursor-default">
+      <marquee
+        width="100%"
+        direction="right"
+        className="font-caladea  text-[#fb7e4a] text-lg font-semibold bg-yellow-200 mb-[-5px] sticky top-0 left-0 right-0  "
+      >
+        <div className="flex justify-between items-center gap-32">
+          <p>This website is under construction.</p>
+          <p>This website is under construction.</p>
+          <p>This website is under construction.</p>
+          <p>This website is under construction.</p>
+          <p>This website is under construction.</p>
+          <p>This website is under construction.</p>
+        </div>
+      </marquee>
       <div
         className={` ${currentPath?.pathname === "/login" ? "hidden" : " "} `}
       >
@@ -54,7 +71,7 @@ function App() {
           currentPath?.pathname === "/login"
             ? "pl-[0px]"
             : currentPath?.pathname?.includes("/admin/")
-            ? "pl-[300px] "
+            ? "pl-[300px]"
             : "pl-0 md:pl-[60px]"
         } `}
       >
@@ -74,7 +91,7 @@ function App() {
           />
           <Route path="/jeeyars" element={<SecondaryLayout_5 />} />
 
-          <Route element={<ProtectedRoutes />}>
+          {/* <Route element={<ProtectedRoutes />}>
             <Route
               path="/admin"
               element={<Navigate to="/admin/dashboard" replace={true} />}
@@ -95,11 +112,24 @@ function App() {
               path="/admin/sub_admin_page/jeeyars_edit"
               element={<AdminJeeyaMainPage />}
             />
-          </Route>
 
-          <Route element={<ProtectedFromAdmin />}>
+            <Route
+              path="/admin/sub_admin_page/gallery_edit"
+              element={<AdminGalleryMainPage />}
+            />
+            <Route
+              path="/admin/sub_admin_page/gallery_edit/:album_id"
+              element={<AdminAlbumPage />}
+            />
+            <Route
+              path="/admin/sub_admin_page/gallery_edit/:album_id/:sub_album_id"
+              element={<AdminSubAlbumPage />}
+            />
+          </Route> */}
+
+          {/* <Route element={<ProtectedFromAdmin />}>
             <Route path="/login" element={<Login />} />
-          </Route>
+          </Route> */}
         </Routes>
       </div>
     </div>

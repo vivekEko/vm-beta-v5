@@ -107,7 +107,6 @@ const SecondaryLayout_3 = () => {
         album_id: parameters?.album,
       })
       .then(function (response) {
-        console.log("all albumdetails :", response?.data);
         setPageData(response?.data);
       })
       .catch(function (error) {

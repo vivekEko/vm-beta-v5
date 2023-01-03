@@ -32,8 +32,8 @@ const AdminMainPageLayout1 = () => {
   return (
     <div className="bg-[#FFF6EB] min-h-screen font-inter pb-52">
       <Admin_header />
-      <div className="px-16">
-        <div className="flex justify-between items-center py-10  sticky  top-24 bg-[#FFF6EB] ">
+      <div className="px-16 z-[100] sticky  top-24">
+        <div className="flex justify-between items-center py-10  bg-[#FFF6EB] ">
           <div className="flex-1"></div>
           <div className="flex-1 text-center">
             <h1 className="text-3xl uppercase font-bold">

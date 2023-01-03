@@ -18,6 +18,7 @@ import { VITE_BASE_LINK } from "../base_link/BaseLink";
 const SecondaryLayout_2 = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [pageData, setPageData] = useState(null);
+  const [selectedContent, setSelectedContent] = useState();
   // const pageData = {
   //   banner: {
   //     heading: "Gallery ",
@@ -210,14 +211,24 @@ const SecondaryLayout_2 = () => {
     width: "100%",
   };
 
+  useEffect(() => {
+    console.log("selectedContent", selectedContent);
+  }, [selectedContent]);
+
   return (
     <section>
       {/* banner */}
-      <div className="bg-[#D9D9D9] ">
+      <div
+        className="bg-[#D9D9D9] bg-no-repeat bg-cover bg-right-bottom min-h-[500px]"
+        style={{
+          backgroundImage:
+            "url(" + VITE_BASE_LINK + pageData?.banner?.image + ")",
+        }}
+      >
         <Header_2 />
 
         <div className="w-[90%] mx-auto">
-          <h1 className="pb-5 md:pb-8  pt-60  uppercase text-3xl md:text-4xl xl:text-5xl lg:w-[70%] xl:w-[60%] 2xl:w-[50%]   font-bold text-[#292929] ">
+          <h1 className="pb-5 md:pb-8  pt-60  uppercase text-3xl md:text-4xl xl:text-5xl lg:w-[70%] xl:w-[60%] 2xl:w-[50%]   font-bold text-white ">
             {pageData?.banner?.heading}
           </h1>
         </div>
@@ -291,29 +302,59 @@ const SecondaryLayout_2 = () => {
                   </Link>
                 </div>
 
-                <div className="flex justify-between w-full gap-2 sm:gap-4 md:gap-6 lg:gap-8  xl:gap-10 2xl:gap-12 py-10">
-                  {mainData?.content_data?.map((data, index) => {
+                <div className="grid grid-cols-4 justify-between w-full gap-2 sm:gap-4 md:gap-6 lg:gap-8  xl:gap-10 2xl:gap-12 py-10">
+                  {mainData?.content_data?.map((data) => {
                     return (
-                      <Link
-                        className="flex-1"
-                        key={index}
-                        to={mainData?.id + "/" + data?.year}
+                      <div
+                        className="cursor-pointer"
+                        onClick={() =>
+                          setSelectedContent({
+                            image_link: VITE_BASE_LINK + data?.image,
+                            image_name: data?.name,
+                            image_desc: data?.details,
+                          })
+                        }
                       >
-                        <div>
-                          <div className="aspect-video  bg-[#D9D9D9]"></div>
-                          <h1 className="text-center pt-2 text-xl md:text-2xl xl:text-3xl">
-                            {data?.year}
-                          </h1>
-                          <p className="text-justify pt-2">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Maxime assumenda rerum iusto atque, mollitia
-                            ab ipsum sapiente debitis blanditiis voluptatum
-                            eligendi
-                          </p>
+                        <div className="aspect-video  bg-[#D9D9D9]">
+                          <img
+                            src={VITE_BASE_LINK + data?.image}
+                            alt={data?.name}
+                          />
                         </div>
-                      </Link>
+                        <h1 className="text-center pt-2 text-xl md:text-2xl xl:text-3xl">
+                          {data?.name}
+                        </h1>
+                      </div>
                     );
                   })}
+                </div>
+
+                <div
+                  onClick={() => setSelectedContent(null)}
+                  className={` ${
+                    selectedContent ? "block" : "hidden"
+                  } fixed inset-0  bg-opacity-40 bg-black z-[15000]`}
+                ></div>
+                <div
+                  className={` ${
+                    selectedContent ? "block" : "hidden"
+                  }  fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]  z-[15500] bg-white rounded-md p-10 text-center `}
+                >
+                  <div>
+                    <img
+                      src={selectedContent?.image_link}
+                      alt={selectedContent?.image_name}
+                    />
+                  </div>
+
+                  <div>
+                    <h1 className="text-xl capitalize my-5">
+                      {selectedContent?.image_name}
+                    </h1>
+                    <p className="font-normal text-justify font-caladea">
+                      {selectedContent?.image_desc}
+                    </p>
+                  </div>
                 </div>
               </div>
             );
