@@ -49,40 +49,41 @@ const Section = (props) => {
   return (
     <div className="">
       {props?.apiData?.layout === "hero" && (
-        <section id={props?.apiData?.seq_no} className=" overflow-y-hidden ">
-          <div className="bg-hero-image    md:h-screen bg-fixed bg-center bg-no-repeat bg-cover border-b-[14px] border-b-[#942200] ">
-            <div className="h-full flex flex-col justify-between items-center">
-              <Header />
-              <div className="flex justify-between flex-col h-full">
-                <div className="mt-16 w-[90%] mx-auto flex-1">
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl uppercase text-center font-medium bg-gradient-to-r to-[#630000] from-[#1400FF]  stroke-white stroke-2 bg-clip-text text-transparent text-stroke   md:min-h-[70px] xl:min-h-[90px] ">
-                    {props?.apiData?.h1}
-                  </h1>
-                  <h2 className="text-white text-[1.4rem] sm:text-[1.6rem] lg:text-3xl xl:text-4xl text-center mt-3 md:mt-5 uppercase">
-                    {props?.apiData?.h2}
-                  </h2>
+        <section id={props?.apiData?.seq_no} className="  ">
+          <div className="bg-hero-image    md:min-h-[95vh] bg-fixed bg-center bg-no-repeat bg-cover border-b-[14px] border-b-[#942200] ">
+            <div className="md:min-h-[95vh]  flex flex-col  ">
+              <div className="flex-[0.3]">
+                <Header />
+              </div>
 
-                  <p
-                    className="font-caladea sm:text-lg xl:text-xl   text-center mt-5 text-white sm:max-w-[80%] md:max-w-[70%]
+              <div className="mt-16 w-[90%] mx-auto flex-1">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl uppercase text-center font-medium bg-gradient-to-r to-[#630000] from-[#1400FF]  stroke-white stroke-2 bg-clip-text text-transparent text-stroke   md:min-h-[70px] xl:min-h-[90px] ">
+                  {props?.apiData?.h1}
+                </h1>
+                <h2 className="text-white text-[1.4rem] sm:text-[1.6rem] lg:text-3xl xl:text-4xl text-center mt-3 md:mt-5 uppercase">
+                  {props?.apiData?.h2}
+                </h2>
+
+                <p
+                  className="font-caladea sm:text-lg xl:text-xl   text-center mt-5 text-white sm:max-w-[80%] md:max-w-[70%]
      lg:max-w-[60%] xl:max-w-[60%] mx-auto"
-                  >
-                    {props?.apiData?.p}
-                  </p>
-                </div>
-
-                <div className="flex-1 flex justify-center items-end">
-                  {props?.apiData?.img?.length > 0 &&
-                    props?.apiData?.img?.map((imgData, imgIndex) => {
-                      return (
-                        <img
-                          key={imgIndex}
-                          src={VITE_BASE_LINK + imgData}
-                          alt={imgData}
-                          className="mx-auto w-full max-w-[500px] 2xl:max-w-[550px]"
-                        />
-                      );
-                    })}
-                </div>
+                >
+                  {props?.apiData?.p}
+                </p>
+              </div>
+              {/* image */}
+              <div className="  flex justify-center items-end">
+                {props?.apiData?.img?.length > 0 &&
+                  props?.apiData?.img?.map((imgData, imgIndex) => {
+                    return (
+                      <img
+                        key={imgIndex}
+                        src={VITE_BASE_LINK + imgData}
+                        alt={imgData}
+                        className="mx-auto w-full max-w-[500px] 2xl:max-w-[30%] "
+                      />
+                    );
+                  })}
               </div>
 
               <a href="/home#landing_page_2">
@@ -194,9 +195,9 @@ const Section = (props) => {
         <section
           id={props?.apiData?.seq_no}
           style={{ backgroundColor: props?.apiData?.background_color }}
-          className="  pt-20 border-b-[12px] border-[#942200]  md:h-screen "
+          className="  pt-20 border-b-[12px] border-[#942200]   "
         >
-          <div className="flex flex-col justify-between h-full  ">
+          <div className="flex flex-col justify-between h-full md:min-h-screen  ">
             <div>
               <h1 className="uppercase text-[#191689] text-[1.4rem] sm:text-[1.6rem] lg:text-3xl xl:text-5xl  font-semibold text-center">
                 {props?.apiData?.h1}
@@ -244,7 +245,7 @@ const Section = (props) => {
         <section
           id={props?.apiData?.seq_no}
           style={{ backgroundColor: props?.apiData?.background_color }}
-          className=" pt-10 flex gap-5 flex-col  justify-between md:flex-row border-b-[9px] border-[#942200]  min-h-screen"
+          className=" pt-10 flex gap-5 flex-col  justify-between lg:flex-row border-b-[9px] border-[#942200]  md:min-h-screen"
         >
           <div className="flex justify-between flex-col  gap-5  py-20 w-full">
             <div className="">
@@ -293,7 +294,7 @@ const Section = (props) => {
           </div>
 
           {/* mobile view */}
-          <div className="flex gap-5  w-full">
+          <div className="flex flex-col gap-5    w-[80%] mx-auto">
             <div className="flex-1 pl-10 md:hidden">
               <a
                 href={props?.apiData?.yt_link}
@@ -331,7 +332,7 @@ const Section = (props) => {
         <section
           id={props?.apiData?.seq_no}
           style={{ backgroundColor: props?.apiData?.background_color }}
-          className=" pt-10 py-20 flex flex-col-reverse gap-5 min-h-screen md:flex-row-reverse border-b-[12px] border-[#942200]  justify-between "
+          className=" pt-10 py-20 flex flex-col-reverse gap-5 md:min-h-screen md:flex-row-reverse border-b-[12px] border-[#942200]  justify-between "
         >
           <div className="flex justify-between flex-col gap-5 flex-1  ">
             <div className="md:py-20">
@@ -396,7 +397,7 @@ const Section = (props) => {
               </div>
             </div>
           </div>
-
+          {/* image */}
           <div className="flex gap-5 flex-1 ">
             {props?.apiData?.img?.map((imgData, imgIndex) => {
               return (
