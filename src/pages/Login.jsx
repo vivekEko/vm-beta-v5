@@ -4,7 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { VITE_BASE_LINK } from "../base_link/BaseLink";
 import Admin_header from "../components/admin/admin_global_components/Admin_header";
 
+import eyes_open from "../assets/img/login/eyes_open.svg";
+import eyes_closed from "../assets/img/login/eyes_closed.svg";
+
 const Login = () => {
+  const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -22,6 +26,8 @@ const Login = () => {
             onSubmit={(e) => {
               // Preventing default refresh
               e.preventDefault();
+
+              setError(null);
               // Storing user credentials
               const userCredentials = {
                 username: emailRef.current.value,
@@ -38,11 +44,17 @@ const Login = () => {
                   data: userCredentials,
                 })
                   .then(function (response) {
-                    console.log("response of login", response?.data);
-                    localStorage.setItem("username", response?.data?.username);
-                    localStorage.setItem("token", response?.data?.token);
-                    localStorage.setItem("user_id", response?.data?.id);
-                    navigate("/admin");
+                    if (response?.data?.token) {
+                      localStorage.setItem(
+                        "username",
+                        response?.data?.username
+                      );
+                      localStorage.setItem("token", response?.data?.token);
+                      localStorage.setItem("user_id", response?.data?.id);
+                      navigate("/admin");
+                    } else {
+                      setError(response?.data?.message);
+                    }
                   })
                   .catch(function (error) {
                     console.log(error);
@@ -59,14 +71,34 @@ const Login = () => {
               className="border rounded-md p-2 w-full my-2 outline-[#FC8D0B]"
             />
             <label htmlFor="password">Password </label>
-            <input
-              ref={passwordRef}
-              name="password"
-              type="password"
-              className="border rounded-md p-2 w-full my-2 outline-[#FC8D0B]"
-            />
+
+            <div className="flex border rounded-md ">
+              <input
+                ref={passwordRef}
+                name="password"
+                type={showPassword ? "text" : "password"}
+                className=" p-2 w-full rounded-md focus:outline-[#FC8D0B] flex-1"
+              />
+
+              <div
+                className="flex justify-center items-center p-2 focus:outline-[#FC8D0B] cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <img src={eyes_open} alt="show password" />
+              </div>
+            </div>
             {/* error */}
-            <p className=" text-[#FF440D] invisible">Incorrect credentials</p>
+            <p
+              className={` ${
+                error ? "flex" : "hidden"
+              } text-[#FF440D] text-sm  items-center gap-2 mt-3`}
+            >
+              {" "}
+              <span className="bg-[#FF440D] text-white aspect-square rounded-full w-[20px] flex justify-center items-center">
+                !
+              </span>{" "}
+              {error}
+            </p>
             <button
               type="submit"
               className="rounded-md bg-[#FF440D] text-white w-full mt-3 p-2 transition-all active:scale-95"

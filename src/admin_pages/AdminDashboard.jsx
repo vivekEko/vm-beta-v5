@@ -23,57 +23,6 @@ const AdminDashboard = () => {
     });
   }, []);
 
-  // const homePageData = {
-  //   title: ["Page title", " Side pages", "Status", "Actions"],
-  //   all_page_data: [
-  //     {
-  //       page_name: "Home Page",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //     {
-  //       page_name: "Vanamamalai temple",
-  //       sub_pages: 3,
-  //       status: "Published",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //     {
-  //       page_name: "Other temple",
-  //       sub_pages: 3,
-  //       status: "Draft",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //     {
-  //       page_name: "Branches",
-  //       sub_pages: 3,
-  //       status: "Archived",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //     {
-  //       page_name: "Ponnadikkal Jeeyar",
-  //       sub_pages: 3,
-  //       status: "Published",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //     {
-  //       page_name: "Jeeyars",
-  //       sub_pages: 1,
-  //       status: "Published",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //     {
-  //       page_name: "Education",
-  //       sub_pages: 1,
-  //       status: "Published",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //     {
-  //       page_name: "Gallery",
-  //       sub_pages: 1,
-  //       status: "Published",
-  //       page_link: "/admin/home_edit",
-  //     },
-  //   ],
-  // };
   return (
     <div className="bg-[#FFF6EB] ">
       <Admin_header />
@@ -113,14 +62,10 @@ const AdminDashboard = () => {
                 </h1>
                 <h1
                   className={` mx-auto  ${
-                    data?.status === "P"
-                      ? "bg-[#29A654] "
-                      : data?.status === "A"
-                      ? "bg-[#FFA451]"
-                      : ""
+                    data?.status ? "bg-[#29A654] " : "bg-[#FFA451]"
                   }  text-center text-white p-2 px-5 w-[150px] rounded-full`}
                 >
-                  {data?.status === "P" ? "Published" : "Archived"}
+                  {data?.status ? "Published" : "Archived"}
                 </h1>
                 <div className="flex justify-center gap-5">
                   <div>
@@ -133,14 +78,14 @@ const AdminDashboard = () => {
                     </Link>
                   </div>
 
-                  {/* {data?.page_name !== "Home Page" && (
+                  {data?.page_name !== "Home Page" && (
                     <div
                       className="relative"
                       onClick={() => {
-                        if (selectedPage === data?.page_name) {
+                        if (selectedPage === data?.id) {
                           setSelectedPage(null);
                         } else {
-                          setSelectedPage(data?.page_name);
+                          setSelectedPage(data?.id);
                         }
                       }}
                     >
@@ -152,24 +97,64 @@ const AdminDashboard = () => {
 
                       <div
                         className={`fixed inset-0 bg-transarent ${
-                          selectedPage === data?.page_name ? "block" : "hidden"
+                          selectedPage === data?.id ? "block" : "hidden"
                         } z-[10000] `}
                       ></div>
 
                       <div
                         className={` ${
-                          selectedPage === data?.page_name ? "block" : "hidden"
+                          selectedPage === data?.id ? "block" : "hidden"
                         } absolute right-0 top-[110%] bg-white shadow-lg z-[10050] space-y-2 `}
                       >
-                        <h1 className="p-3 px-5 cursor-pointer hover:bg-slate-100">
+                        <h1
+                          onClick={async () => {
+                            const publishPage = await axios.patch(
+                              VITE_BASE_LINK + "adminDashboard",
+                              {
+                                data: {
+                                  root_page_id: selectedPage,
+                                  page_status: "P",
+                                },
+                              }
+                            );
+
+                            const pageData = await axios
+                              .post(VITE_BASE_LINK + "adminDashboard")
+                              .then((response) => {
+                                setHomePageData(response?.data);
+                                console.log(response?.data);
+                              });
+                          }}
+                          className="p-3 px-5 cursor-pointer hover:bg-slate-100"
+                        >
                           Published
                         </h1>
-                        <h1 className="p-3 px-5 cursor-pointer hover:bg-slate-100">
+                        <h1
+                          onClick={async () => {
+                            const archivedPage = await axios.patch(
+                              VITE_BASE_LINK + "adminDashboard",
+                              {
+                                data: {
+                                  root_page_id: selectedPage,
+                                  page_status: "A",
+                                },
+                              }
+                            );
+
+                            const pageData = await axios
+                              .post(VITE_BASE_LINK + "adminDashboard")
+                              .then((response) => {
+                                setHomePageData(response?.data);
+                                console.log(response?.data);
+                              });
+                          }}
+                          className="p-3 px-5 cursor-pointer hover:bg-slate-100"
+                        >
                           Archived
                         </h1>
                       </div>
                     </div>
-                  )} */}
+                  )}
                 </div>
               </div>
             );

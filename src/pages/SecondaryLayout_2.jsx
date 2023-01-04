@@ -295,11 +295,11 @@ const SecondaryLayout_2 = () => {
                     {mainData?.title}
                   </h1>
 
-                  <Link to={mainData?.id.toString()}>
+                  {/* <Link to={mainData?.id.toString()}>
                     <button className=" p-2 px-4 md:p-3 md:px-10  text-base md:text-lg bg-[#FC8D0B] text-white w-fit  active:scale-95 transition-all">
                       View All
                     </button>
-                  </Link>
+                  </Link> */}
                 </div>
 
                 <div className="grid grid-cols-4 justify-between w-full gap-2 sm:gap-4 md:gap-6 lg:gap-8  xl:gap-10 2xl:gap-12 py-10">
@@ -315,10 +315,11 @@ const SecondaryLayout_2 = () => {
                           })
                         }
                       >
-                        <div className="aspect-video  bg-[#D9D9D9]">
+                        <div className="aspect-video flex justify-center items-center  bg-[#D9D9D9]">
                           <img
                             src={VITE_BASE_LINK + data?.image}
                             alt={data?.name}
+                            className="h-full w-full"
                           />
                         </div>
                         <h1 className="text-center pt-2 text-xl md:text-2xl xl:text-3xl">
@@ -340,7 +341,7 @@ const SecondaryLayout_2 = () => {
                     selectedContent ? "block" : "hidden"
                   }  fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]  z-[15500] bg-white rounded-md p-10 text-center `}
                 >
-                  <div>
+                  <div className="">
                     <img
                       src={selectedContent?.image_link}
                       alt={selectedContent?.image_name}

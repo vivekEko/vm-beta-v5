@@ -45,13 +45,7 @@ const AdminGalleryMainPage = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(
-      "%c #### PAGE DATA ###### ",
-      "background: #000000 ; color: #ffff",
-      pageData
-    );
-  }, [pageData]);
+  useEffect(() => {}, [pageData]);
 
   return (
     <div className="bg-[#FFF6EB] min-h-screen font-inter pb-52">

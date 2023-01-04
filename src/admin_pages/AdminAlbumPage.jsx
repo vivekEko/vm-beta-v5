@@ -52,8 +52,6 @@ const AdminAlbumPage = () => {
   const location = useParams();
 
   useEffect(() => {
-    // setPageData(pageData2);
-
     axios
       .get(VITE_BASE_LINK + "gallery_edit?page_id=" + location?.album_id)
       .then((response) => {
@@ -61,28 +59,44 @@ const AdminAlbumPage = () => {
       });
   }, []);
 
+  useEffect(() => {
+    console.log(
+      "%c #### PAGE DATA ###### ",
+      "background: #000000 ; color: #ffff",
+      pageData
+    );
+  }, [pageData]);
+
   return (
     <div className="bg-[#FFF6EB] min-h-screen font-inter pb-52">
       <Admin_header />
       <div className="flex justify-between items-start py-10  sticky z-[100]  top-24 bg-[#FFF6EB] px-16">
         <div className="flex-1"></div>
         <div className="flex-1 text-center">
-          <h1 className="text-3xl uppercase font-bold">{pageData?.pageName}</h1>
+          <h1 className="text-3xl uppercase font-bold">
+            {pageData?.album_name}
+          </h1>
         </div>
 
         <div className="flex-1 ">
           <button
-            // onClick={() => {
-            //   let cnfText = confirm("Do you want to pulished the data now?");
+            onClick={() => {
+              let cnfText = confirm("Do you want to pulished the data now?");
 
-            //   if (cnfText) {
-            //     axios
-            //       .put(VITE_BASE_LINK + "jeeyars_edit", pageData)
-            //       .then((response) => {
-            //         alert("Your data is published!");
-            //       });
-            //   }
-            // }}
+              if (cnfText) {
+                axios
+                  .put(
+                    VITE_BASE_LINK +
+                      "gallery_edit" +
+                      "?page_id=" +
+                      location?.album_id,
+                    pageData
+                  )
+                  .then((response) => {
+                    alert("Your data is published!");
+                  });
+              }
+            }}
             className="block ml-auto p-3 px-5 bg-[#FF440D] text-white rounded-lg transition-all active:scale-95 "
           >
             Publish Content
@@ -105,7 +119,7 @@ const AdminAlbumPage = () => {
                   type="text"
                   rows={2}
                   placeholder="Enter album name"
-                  value={pageData?.pageName}
+                  value={pageData?.album_name}
                   onChange={(e) => {
                     setPageData({
                       ...pageData,
@@ -126,21 +140,30 @@ const AdminAlbumPage = () => {
                   {pageData?.content_array?.length}
                 </span>
                 <button
-                  //  onClick={async () => {
-                  //    const addSubPage = await axios
-                  //      .post(VITE_BASE_LINK + pathname?.sub_admin_page_name)
-                  //      .then((response) => {
-                  //        console.log(response?.data);
-                  //      });
+                  onClick={async () => {
+                    const formdata = new FormData();
+                    formdata?.append("page_id", location?.album_id);
 
-                  //    const allPageData = await axios
-                  //      .get(VITE_BASE_LINK + pathname?.sub_admin_page_name)
-                  //      .then((response) => {
-                  //        setPageData(response?.data);
-                  //        setImageArray(response?.data?.all_input_fields[1]?.content);
-                  //        alert("Sub page added sucessfully");
-                  //      });
-                  //  }}
+                    const addAlbumContent = await axios
+                      .post(
+                        VITE_BASE_LINK +
+                          "gallery_edit" +
+                          "?page_id=" +
+                          location?.album_id,
+                        formdata
+                      )
+                      .then((response) => {});
+
+                    const allPageData = await axios
+                      .get(
+                        VITE_BASE_LINK +
+                          "gallery_edit?page_id=" +
+                          location?.album_id
+                      )
+                      .then((response) => {
+                        setPageData(response?.data);
+                      });
+                  }}
                   className="active:scale-95 transition-all"
                 >
                   <img src={add_icon} alt="add" />
@@ -153,7 +176,7 @@ const AdminAlbumPage = () => {
                   return (
                     <div
                       key={data?.id}
-                      className="flex gap-10   overflow-hidden py-10 border-b"
+                      className="flex gap-10   overflow-hidden py-10 border-b px-10"
                     >
                       <div className="w-[30%]">
                         <div className=" mb-5">
@@ -192,6 +215,7 @@ const AdminAlbumPage = () => {
                                 className="opacity-0 cursor-pointer inset-0 "
                                 id={"upload-image" + data?.id}
                                 type="file"
+                                onClick={() => setActiveInput(data?.id)}
                                 onChange={(e) => {
                                   let formdata = new FormData();
                                   formdata.append("file", e?.target?.files[0]);
@@ -204,10 +228,23 @@ const AdminAlbumPage = () => {
                                       formdata
                                     )
                                     .then((response) => {
+                                      console.log("response recieved");
                                       setPageData({
                                         ...pageData,
-                                        banner_image:
-                                          response?.data?.image_array[0],
+                                        content_array:
+                                          pageData?.content_array?.map(
+                                            (data) => {
+                                              if (data?.id === activeInput) {
+                                                return {
+                                                  ...data,
+                                                  image:
+                                                    response?.data
+                                                      ?.image_array[0],
+                                                };
+                                              }
+                                              return data;
+                                            }
+                                          ),
                                       });
                                     });
                                 }}
@@ -224,6 +261,24 @@ const AdminAlbumPage = () => {
                             placeholder="Enter label name here"
                             rows="1"
                             className="p-3 rounded-lg"
+                            onClick={() => setActiveInput(data?.id)}
+                            onChange={(e) => {
+                              setPageData({
+                                ...pageData,
+
+                                content_array: pageData?.content_array?.map(
+                                  (data) => {
+                                    if (data?.id === activeInput) {
+                                      return {
+                                        ...data,
+                                        name: e?.target?.value,
+                                      };
+                                    }
+                                    return data;
+                                  }
+                                ),
+                              });
+                            }}
                             value={data?.name}
                           ></textarea>
                         </div>
@@ -238,7 +293,68 @@ const AdminAlbumPage = () => {
                           rows="1"
                           className="p-3 rounded-lg w-full h-[90%]"
                           value={data?.details}
+                          onClick={() => setActiveInput(data?.id)}
+                          onChange={(e) => {
+                            setPageData({
+                              ...pageData,
+
+                              content_array: pageData?.content_array?.map(
+                                (data) => {
+                                  if (data?.id === activeInput) {
+                                    return {
+                                      ...data,
+                                      details: e?.target?.value,
+                                    };
+                                  }
+                                  return data;
+                                }
+                              ),
+                            });
+                          }}
                         ></textarea>
+                      </div>
+
+                      <div>
+                        <img
+                          src={delete_icon}
+                          alt="delete content"
+                          className="w-[35px] cursor-pointer transition-all active:scale-95 "
+                          onClick={async () => {
+                            let cnfText = confirm(
+                              "Do you want to delete this content?"
+                            );
+
+                            if (cnfText) {
+                              const deleteContent = await axios
+                                .delete(
+                                  VITE_BASE_LINK +
+                                    "gallery_edit" +
+                                    "?page_id=" +
+                                    location?.album_id,
+                                  {
+                                    data: {
+                                      album_id: location?.album_id,
+                                      image_id: data?.id,
+                                    },
+                                  }
+                                )
+                                .then((response) => {});
+
+                              const allPageData = await axios
+                                .get(
+                                  VITE_BASE_LINK +
+                                    "gallery_edit" +
+                                    "?page_id=" +
+                                    location?.album_id
+                                )
+                                .then((response) => {
+                                  setPageData(response?.data);
+
+                                  alert("Content deleted sucessfully");
+                                });
+                            }
+                          }}
+                        />
                       </div>
                     </div>
                   );
