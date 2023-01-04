@@ -182,6 +182,7 @@ const AdminSubPageLayout1 = () => {
           location?.sub_page_id
       )
       .then((response) => {
+        console.log("response?.data:", response?.data);
         setActiveTab(response?.data?.all_tabs[0]?.tab_id);
         setPageData(response?.data);
 
@@ -308,54 +309,52 @@ const AdminSubPageLayout1 = () => {
             </div>
 
             {/* Heading */}
-            {pageData?.heading && (
-              <div className="bg-white p-5 rounded-lg mb-5 border-[#E0E2E7] border">
-                <div className="flex items-center gap-5  border-b-[#E0E2E7] border-b pb-5">
-                  <h1 className="font-semibold">Heading</h1>
-                </div>
 
-                <div className="mt-5">
-                  <textarea
-                    type="text"
-                    rows={2}
-                    value={pageData?.heading}
-                    onClick={() => setActiveInput(pageData?.tab_id)}
-                    onChange={(e) => {
-                      setPageData({
-                        ...pageData,
-                        heading: e?.target?.value,
-                      });
-                    }}
-                    className="w-full outline-none border-0"
-                  />
-                </div>
+            <div className="bg-white p-5 rounded-lg mb-5 border-[#E0E2E7] border">
+              <div className="flex items-center gap-5  border-b-[#E0E2E7] border-b pb-5">
+                <h1 className="font-semibold">Heading</h1>
               </div>
-            )}
+
+              <div className="mt-5">
+                <textarea
+                  type="text"
+                  rows={2}
+                  value={pageData?.heading}
+                  onClick={() => setActiveInput(pageData?.tab_id)}
+                  onChange={(e) => {
+                    setPageData({
+                      ...pageData,
+                      heading: e?.target?.value,
+                    });
+                  }}
+                  className="w-full outline-none border-0"
+                />
+              </div>
+            </div>
 
             {/* subheading */}
-            {pageData?.subheading && (
-              <div className="bg-white p-5 rounded-lg mb-5 border-[#E0E2E7] border">
-                <div className="flex items-center gap-5  border-b-[#E0E2E7] border-b pb-5">
-                  <h1 className="font-semibold">Sub Heading</h1>
-                </div>
 
-                <div className="mt-5">
-                  <textarea
-                    type="text"
-                    rows={2}
-                    value={pageData?.subheading}
-                    onClick={() => setActiveInput(pageData?.tab_id)}
-                    onChange={(e) => {
-                      setPageData({
-                        ...pageData,
-                        subheading: e?.target?.value,
-                      });
-                    }}
-                    className="w-full outline-none border-0"
-                  />
-                </div>
+            <div className="bg-white p-5 rounded-lg mb-5 border-[#E0E2E7] border">
+              <div className="flex items-center gap-5  border-b-[#E0E2E7] border-b pb-5">
+                <h1 className="font-semibold">Sub Heading</h1>
               </div>
-            )}
+
+              <div className="mt-5">
+                <textarea
+                  type="text"
+                  rows={2}
+                  value={pageData?.subheading}
+                  onClick={() => setActiveInput(pageData?.tab_id)}
+                  onChange={(e) => {
+                    setPageData({
+                      ...pageData,
+                      subheading: e?.target?.value,
+                    });
+                  }}
+                  className="w-full outline-none border-0"
+                />
+              </div>
+            </div>
 
             {/* banner image */}
             {pageData?.banner_image && (
@@ -415,61 +414,60 @@ const AdminSubPageLayout1 = () => {
             )}
 
             {/*  content image */}
-            {pageData?.content_image && (
-              <div className="my-10 ">
-                <div className="flex items-center gap-5">
-                  <h1 className="font-semibold">Content Image</h1>
-                </div>
-                <div className="mt-2 bg-white  border border-dashed rounded-lg h-full min-h-[200px] border-[#E0E2E7] ">
-                  <label
-                    // onClick={handleClick}
-                    htmlFor="upload-image"
-                    className="flex flex-col  justify-center items-center h-full min-h-[200px] border cursor-pointer group transition-all relative z-20"
-                  >
-                    <div className=" flex-col justify-center items-center absolute bg-black bg-opacity-95 inset-0 hidden group-hover:flex transition-all duration-[1000] ">
-                      <img
-                        src={image_icon}
-                        alt="upload image"
-                        className="w-[50px] block "
-                      />
-                      <h1 className="font-semibold block">
-                        <span className="text-[#FF440D] ">Upload an image</span>
-                      </h1>
-                      <h2 className=" block text-white">
-                        PNG, JPG, GIF up to 5MB
-                      </h2>
-                    </div>
 
-                    <img
-                      src={VITE_BASE_LINK + pageData?.content_image}
-                      alt=""
-                      className=""
-                    />
-                    <input
-                      // ref={hiddenFileInput}
-                      className="opacity-0 cursor-pointer inset-0 "
-                      id="upload-image"
-                      type="file"
-                      onChange={(e) => {
-                        let formdata = new FormData();
-                        formdata.append("file", e?.target?.files[0]);
-                        formdata.append("index", 0);
-                        formdata.append("image_array", "abcd");
-
-                        axios
-                          .post(VITE_BASE_LINK + "newImageUpload", formdata)
-                          .then((response) => {
-                            setPageData({
-                              ...pageData,
-                              content_image: response?.data?.image_array[0],
-                            });
-                          });
-                      }}
-                    />
-                  </label>
-                </div>
+            <div className="my-10 ">
+              <div className="flex items-center gap-5">
+                <h1 className="font-semibold">Content Image</h1>
               </div>
-            )}
+              <div className="mt-2 bg-white  border border-dashed rounded-lg h-full min-h-[200px] border-[#E0E2E7] ">
+                <label
+                  // onClick={handleClick}
+                  htmlFor="upload-image"
+                  className="flex flex-col  justify-center items-center h-full min-h-[200px] border cursor-pointer group transition-all relative z-20"
+                >
+                  <div className=" flex-col justify-center items-center absolute bg-black bg-opacity-95 inset-0 hidden group-hover:flex transition-all duration-[1000] ">
+                    <img
+                      src={image_icon}
+                      alt="upload image"
+                      className="w-[50px] block "
+                    />
+                    <h1 className="font-semibold block">
+                      <span className="text-[#FF440D] ">Upload an image</span>
+                    </h1>
+                    <h2 className=" block text-white">
+                      PNG, JPG, GIF up to 5MB
+                    </h2>
+                  </div>
+
+                  <img
+                    src={VITE_BASE_LINK + pageData?.content_image}
+                    alt=""
+                    className=""
+                  />
+                  <input
+                    // ref={hiddenFileInput}
+                    className="opacity-0 cursor-pointer inset-0 "
+                    id="upload-image"
+                    type="file"
+                    onChange={(e) => {
+                      let formdata = new FormData();
+                      formdata.append("file", e?.target?.files[0]);
+                      formdata.append("index", 0);
+                      formdata.append("image_array", "abcd");
+
+                      axios
+                        .post(VITE_BASE_LINK + "newImageUpload", formdata)
+                        .then((response) => {
+                          setPageData({
+                            ...pageData,
+                            content_image: response?.data?.image_array[0],
+                          });
+                        });
+                    }}
+                  />
+                </label>
+              </div>
+            </div>
 
             {/* input fields */}
             <div className="w-full bg-white p-5 rounded-lg mb-5 border-[#E0E2E7] border ">

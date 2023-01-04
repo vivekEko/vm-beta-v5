@@ -24,6 +24,10 @@ const AdminMainPageLayout1 = () => {
     axios
       .get(VITE_BASE_LINK + pathname?.sub_admin_page_name)
       .then((response) => {
+        console.log(
+          "############ PAGE DATA ###################",
+          response?.data
+        );
         setPageData(response?.data);
         setImageArray(response?.data?.all_input_fields[1]?.content);
       });
@@ -94,7 +98,7 @@ const AdminMainPageLayout1 = () => {
                         ...pageData,
                         all_input_fields: pageData?.all_input_fields?.map(
                           (data) => {
-                            if (data?.section_name === activeInput) {
+                            if (data?.id === activeInput) {
                               return {
                                 ...data,
                                 content: e?.target?.value,

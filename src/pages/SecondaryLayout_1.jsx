@@ -121,6 +121,7 @@ const SecondaryLayout_1 = () => {
       })
       .then(function (response) {
         setPageData(response?.data);
+        console.log("#### PAGE DATA ####", response?.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -174,7 +175,7 @@ const SecondaryLayout_1 = () => {
             </div>
 
             <div className="md:w-full ">
-              <div className="bg-[#FF9D80] flex md:rounded-bl-3xl">
+              <div className="bg-[#FF9D80] flex md:rounded-bl-3xl overflow-x-scroll">
                 {pageData?.tab_data?.map((data, index) => {
                   return (
                     <button
@@ -186,9 +187,9 @@ const SecondaryLayout_1 = () => {
                         activeTab === index && index === 0
                           ? "md:rounded-bl-3xl"
                           : ""
-                      } p-2 text-white  flex-1 sm:text-lg transition-all`}
+                      } p-5  text-white  w-max  sm:text-lg transition-all`}
                     >
-                      {data?.name}
+                      <div className="w-max min-w-[100px]">{data?.name}</div>
                     </button>
                   );
                 })}
